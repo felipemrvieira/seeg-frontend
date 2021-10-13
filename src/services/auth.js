@@ -1,4 +1,4 @@
-export const TOKEN_KEY = '@Seeg-Token';
+export const TOKEN_KEY = '@Seeg-API-Token';
 export const EXPIRY = 'expiry';
 export const UID = 'uid';
 export const CLIENT = 'client';
