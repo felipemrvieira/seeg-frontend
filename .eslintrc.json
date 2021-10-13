@@ -33,12 +33,17 @@
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
 		"import/no-unresolved": "off",
+		"no-param-reassign": "off",
+		"react/jsx-props-no-spreading": "off",
+		"no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
 		"import/extensions": [
 			"error",
 			"ignorePackages",
 			{
 				"ts": "never",
-				"tsx": "never"
+				"tsx": "never",
+				"js": "never",
+				"jsx": "never"
 			}
 		]
 	}
