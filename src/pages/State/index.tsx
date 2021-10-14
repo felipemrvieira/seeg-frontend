@@ -1,15 +1,15 @@
 import React from 'react';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle';
-
 import { Container } from './styles';
+import MapLegend from '../../components/MapLegend';
 
 const State: React.FC = () => (
 	<>
 		<Nav />
-		<Container>state</Container>
+		<Container>
+			<MapLegend />
+		</Container>
 		<Footer />
 	</>
 );
