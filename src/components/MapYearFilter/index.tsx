@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
 	Container,
 	Range,
@@ -33,7 +34,7 @@ const MapYearFilter: React.FC = () => {
 					/>
 					<RangeMarkerContainer>
 						{[...Array(steps)].map((e, i) => (
-							<RangeMarker>
+							<RangeMarker key={e}>
 								<div />
 								<p>{i + minValue}</p>
 							</RangeMarker>

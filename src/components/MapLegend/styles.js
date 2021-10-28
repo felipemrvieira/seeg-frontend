@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	align-self: end;
+	/* align-self: end; */
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	z-index: 999;
 	width: 300px;
 	font-size: 0.8em;
 `;

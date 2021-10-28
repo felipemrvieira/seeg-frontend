@@ -53,19 +53,19 @@ export const Range = styled.input`
 	&::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: 20px;
-		height: 20px;
+		width: 18px;
+		height: 18px;
 		border-radius: 50%;
 		background: #fa953a;
-		cursor: pointer;
+		cursor: ew-resize;
 		transition: all ease-in-out 0.05s;
 	}
 	&::-moz-range-thumb {
-		width: 20px;
-		height: 20px;
+		width: 18px;
+		height: 18px;
 		border-radius: 50%;
 		background: #fa953a;
-		cursor: pointer;
+		cursor: ew-resize;
 		transition: all ease-in-out 0.05s;
 	}
 `;

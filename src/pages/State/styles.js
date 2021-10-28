@@ -5,7 +5,12 @@ export const Container = styled.div`
 	flex: 1;
 	flex-direction: row;
 	width: 100%;
-	background: lightblue;
+	position: relative;
+	/* background: lightblue; */
 	justify-content: space-between;
-	padding: 10px;
+	/* padding: 10px; */
+	.leaflet-container {
+		width: 100%;
+		height: 70vh;
+	}
 `;
