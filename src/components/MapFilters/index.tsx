@@ -1,13 +1,70 @@
 import React from 'react';
-import { Container, Box } from './styles';
+import { components } from 'react-select';
+import { Container, Box, Select } from './styles';
+import bubble from '../../assets/img/icon-bubble-color.svg';
+import energy from '../../assets/img/icon-energy-color.svg';
+import cow from '../../assets/img/icon-cow-color.svg';
+import factory from '../../assets/img/icon-factory-color.svg';
+import trash from '../../assets/img/icon-trash-color.svg';
+import tree from '../../assets/img/icon-tree-color.svg';
+
+const solutionOfOptions = [
+	{ id: 'mitigation', title: 'Emissões totais', icon: bubble },
+	{ id: 'adaptation', title: 'Energia', icon: energy },
+	{ id: 'x', title: 'Agropecuária', icon: cow },
+	{ id: 'x', title: 'Processos Industriais', icon: factory },
+	{ id: 'x', title: 'Resíduos', icon: trash },
+	{ id: 'x', title: 'Mudança e uso da terra e florestas', icon: tree },
+].map((item) => ({
+	value: item.id,
+	label: item.title,
+	icon: item.icon,
+}));
+
+const { Option } = components;
+const IconOption: React.FC = (props: any) => {
+	const { data } = props;
+	return (
+		<Option {...props}>
+			<img
+				src={data.icon}
+				style={{
+					width: 30,
+					height: 30,
+					marginTop: 8,
+					marginRight: 12,
+					marginBottom: 8,
+					marginLeft: 12,
+				}}
+				alt={data.label}
+			/>
+			{data.label}
+		</Option>
+	);
+};
 
 const MapFilters: React.FC = () => (
 	<Container>
 		<Box>
-			<p>Setor</p>
+			<div className="boxHeader">Setor</div>
+			<div className="boxContent">
+				<Select
+					defaultValue={solutionOfOptions[0]}
+					name="color"
+					options={solutionOfOptions}
+					components={{ Option: IconOption }}
+				/>
+			</div>
 		</Box>
 		<Box>
-			<p>Gas</p>
+			<div className="boxHeader">Gas</div>
+			<div className="boxContent">
+				<Select
+					defaultValue={solutionOfOptions[0]}
+					name="color"
+					options={solutionOfOptions}
+				/>
+			</div>
 		</Box>
 	</Container>
 );

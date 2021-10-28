@@ -35,7 +35,8 @@
 		"import/no-unresolved": "off",
 		"no-param-reassign": "off",
 		"react/jsx-props-no-spreading": "off",
-		"no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+		// "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+		"no-unused-vars": "off",
 		"import/extensions": [
 			"error",
 			"ignorePackages",

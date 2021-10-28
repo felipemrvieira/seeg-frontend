@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ReactSelect from 'react-select';
 
 export const Container = styled.div`
 	/* align-self: top; */
@@ -10,10 +11,27 @@ export const Container = styled.div`
 	z-index: 999;
 `;
 export const Box = styled.div`
-	padding: 10px;
 	background: white;
-	border-radius: 4px;
-	text-align: center;
 	margin-bottom: 12px;
 	font-family: 'Lato', sans-serif;
+	border-radius: 4px;
+	.boxHeader {
+		padding: 10px;
+		position: relative;
+		padding: 4px 10px;
+		font-size: 1em;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #fff;
+		background-color: #75858a;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+	}
+	.boxContent {
+		padding: 10px;
+	}
+`;
+
+export const Select = styled(ReactSelect)`
+	/* margin-bottom: 22px; */
 `;
