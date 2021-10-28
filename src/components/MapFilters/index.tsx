@@ -7,6 +7,7 @@ import cow from '../../assets/img/icon-cow-color.svg';
 import factory from '../../assets/img/icon-factory-color.svg';
 import trash from '../../assets/img/icon-trash-color.svg';
 import tree from '../../assets/img/icon-tree-color.svg';
+import SelectItem from '../SelectItem';
 
 const solutionOfOptions = [
 	{ id: 'mitigation', title: 'Emissões totais', icon: bubble },
@@ -26,19 +27,7 @@ const IconOption: React.FC = (props: any) => {
 	const { data } = props;
 	return (
 		<Option {...props}>
-			<img
-				src={data.icon}
-				style={{
-					width: 30,
-					height: 30,
-					marginTop: 8,
-					marginRight: 12,
-					marginBottom: 8,
-					marginLeft: 12,
-				}}
-				alt={data.label}
-			/>
-			{data.label}
+			<SelectItem icon={data.icon} label={data.label} />
 		</Option>
 	);
 };
