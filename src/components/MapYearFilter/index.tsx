@@ -20,7 +20,7 @@ const MapYearFilter: React.FC = () => {
 	return (
 		<>
 			<Container>
-				<p>{rangeValue}</p>
+				{/* <p>{rangeValue}</p> */}
 				<RangeContainer>
 					<Range
 						type="range"
