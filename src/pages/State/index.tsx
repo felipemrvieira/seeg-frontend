@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
@@ -7,29 +7,48 @@ import MapLegend from '../../components/MapLegend';
 import MapFilters from '../../components/MapFilters';
 import MapYearFilter from '../../components/MapYearFilter';
 import 'leaflet/dist/leaflet.css';
+import api from '../../services/api';
 
-const State: React.FC = () => (
-	<>
-		<Nav />
-		<Container>
-			<MapContainer
-				zoomControl={false}
-				center={[-14.1403536, -53.5436177]}
-				zoom={4}
-				scrollWheelZoom={false}
-			>
-				<ZoomControl position="topright" />
-				<TileLayer
-					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-				/>
-			</MapContainer>
-			<MapFilters />
-			<MapLegend />
-		</Container>
-		<MapYearFilter />
-		<Footer />
-	</>
-);
+const State: React.FC = () => {
+	const [mapInfo, setMapInfo] = useState({});
+
+	async function loadStateMapInfo() {
+		try {
+			const response = await api.get('/map');
+			setMapInfo(response.data);
+			console.log(response.data);
+		} catch (err) {
+			// console.tron.log(err);
+		}
+	}
+
+	useEffect(() => {
+		loadStateMapInfo();
+	}, []);
+
+	return (
+		<>
+			<Nav />
+			<Container>
+				<MapContainer
+					zoomControl={false}
+					center={[-14.1403536, -53.5436177]}
+					zoom={4}
+					scrollWheelZoom={false}
+				>
+					<ZoomControl position="topright" />
+					<TileLayer
+						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+				</MapContainer>
+				<MapFilters />
+				<MapLegend />
+			</Container>
+			<MapYearFilter />
+			<Footer />
+		</>
+	);
+};
 
 export default State;
