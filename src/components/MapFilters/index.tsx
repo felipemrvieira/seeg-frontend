@@ -17,12 +17,12 @@ const SelectLoader = () => (
 		speed={2}
 		width={400}
 		// height={150}
-		viewBox="0 0 400 50"
+		viewBox="0 0 400 55"
 		backgroundColor="#f3f3f3"
 		foregroundColor="#ecebeb"
 		// {...props}
 	>
-		<rect x="0" y="0" rx="8" ry="8" width="100%" height="50" />
+		<rect x="0" y="0" rx="8" ry="8" width="100%" height="55" />
 	</ContentLoader>
 );
 
@@ -58,9 +58,9 @@ const IconOption: React.FC = (props: any) => {
 const MapFilters: React.FC<MapInfo> = ({
 	sectors,
 	gases,
-	activeSector,
-	activeGas,
-	activeYear,
+	// activeSector,
+	// activeGas,
+	// activeYear,
 }) => {
 	const sectorOptions = sectors.map((item) => ({
 		value: item.id,
