@@ -89,7 +89,13 @@ const State: React.FC = () => {
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
 				</MapContainer>
-				<MapFilters />
+				<MapFilters
+					sectors={mapInfo.sectors}
+					gases={mapInfo.gases}
+					activeSector={activeSector()}
+					activeGas={mapInfo.defaultGas}
+					activeYear={mapInfo.defaultYear}
+				/>
 				<MapLegend
 					activeSector={activeSector()}
 					activeGas={mapInfo.defaultGas}
