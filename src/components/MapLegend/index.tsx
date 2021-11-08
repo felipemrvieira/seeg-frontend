@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ContentLoader from 'react-content-loader';
+import axios from 'axios';
 import {
 	Container,
 	Box,
@@ -11,7 +12,8 @@ import {
 	BoxGradientNote,
 } from './styles';
 import api from '../../services/api';
-import { MapInfo } from './interfaces';
+import { MapInfo, IMapLegend } from './interfaces';
+import { formatNumber } from '../../utils';
 
 const SelectLoader = () => (
 	<ContentLoader
@@ -39,12 +41,14 @@ const MapLegend: React.FC<MapInfo> = ({
 	activeYear,
 	activeGas,
 }) => {
-	const [mapLegend, setMapLegend] = useState({});
+	const [mapLegend, setMapLegend] = useState<IMapLegend>({
+		allocated_in_country: '',
+		biggest_state_emission: '',
+		non_allocated: '',
+	});
 	const [loading, setLoading] = useState(true);
 
 	async function getInfos() {
-		console.log('getInfos');
-
 		try {
 			const params = {
 				sector: activeSector.slug,
@@ -52,8 +56,19 @@ const MapLegend: React.FC<MapInfo> = ({
 				gas: activeGas,
 				cities: false,
 			};
-			const response = await api.get('/map/emissions_info', { params });
+
+			let API_URL;
+
+			if (process.env.NODE_ENV === 'production') {
+				API_URL = 'https://plataforma.seeg.eco.br';
+			} else {
+				API_URL = 'http://localhost:3000';
+			}
+			const response = await axios.get(`${API_URL}/map/emissions_info`, {
+				params,
+			});
 			setMapLegend(response.data);
+			setLoading(false);
 			console.log(response.data);
 		} catch (err) {
 			// console.tron.log(err);
@@ -64,31 +79,40 @@ const MapLegend: React.FC<MapInfo> = ({
 		getInfos();
 	}, [activeSector, activeYear, activeGas]);
 
+	const maxEmission = parseInt(
+		mapLegend.biggest_state_emission.replace(/\./g, ''),
+		10
+	);
+
 	return (
 		<Container>
 			{loading ? (
 				<Box>
-					{/* <header>Emissões não alocadas nos estados</header> */}
-					{/* <div className="box-control__content"> */}
-					<BoxLabel>Emissões não alocadas nos estados</BoxLabel>
-					<BoxValue>4,80%</BoxValue>
-					<BoxLabel>Total de emissões do setor</BoxLabel>
-					<BoxValue>2.175.630.937</BoxValue>
-					<BoxNote>Em toneladas</BoxNote>
-					{/* </div> */}
+					<SelectLoader />
 				</Box>
 			) : (
 				<Box>
-					<SelectLoader />
+					{/* <header>Emissões não alocadas nos estados</header> */}
+					{/* <div className="box-control__content"> */}
+					<BoxLabel>Emissões não alocadas nos estados</BoxLabel>
+					<BoxValue>{mapLegend.non_allocated}</BoxValue>
+					<BoxLabel>Total de emissões do setor</BoxLabel>
+					<BoxValue>{mapLegend.allocated_in_country}</BoxValue>
+					<BoxNote>Em toneladas</BoxNote>
+					{/* </div> */}
 				</Box>
 			)}
 
-			{true ? (
+			{loading ? (
+				<Box>
+					<SelectLoader />
+				</Box>
+			) : (
 				<Box>
 					<div className="map-legend-gradient">
 						<Range>
 							<span>0</span>
-							<span>400m</span>
+							<span>{formatNumber(maxEmission, '.', ',', 0)}</span>
 						</Range>
 						<RangeGradient />
 						<BoxGradientNote>
@@ -96,10 +120,6 @@ const MapLegend: React.FC<MapInfo> = ({
 							milhões de toneladas do GEE
 						</BoxGradientNote>
 					</div>
-				</Box>
-			) : (
-				<Box>
-					<SelectLoader />
 				</Box>
 			)}
 		</Container>
