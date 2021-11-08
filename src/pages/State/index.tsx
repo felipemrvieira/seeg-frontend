@@ -8,38 +8,7 @@ import MapFilters from '../../components/MapFilters';
 import MapYearFilter from '../../components/MapYearFilter';
 import 'leaflet/dist/leaflet.css';
 import api from '../../services/api';
-
-interface EmissionType {
-	name: string;
-	slug: string;
-}
-interface Gas {
-	id: number;
-	name: string;
-	slug: string;
-}
-interface Sector {
-	id: number;
-	name: string;
-	slug: string;
-}
-interface State {
-	id: number;
-	name: string;
-	slug: string;
-}
-interface MapInfoInterface {
-	activeLevel: number;
-	allSectorsColor: string;
-	defaultEmissionType: string;
-	defaultGas: number;
-	defaultSector: number;
-	defaultYear: number;
-	sectors: Sector[];
-	emissionsTypes: EmissionType[];
-	gases: Gas[];
-	states: State[];
-}
+import { MapInfoInterface } from './interfaces';
 
 const State: React.FC = () => {
 	const [mapInfo, setMapInfo] = useState<MapInfoInterface>({
@@ -85,7 +54,7 @@ const State: React.FC = () => {
 				>
 					<ZoomControl position="topright" />
 					<TileLayer
-						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
 				</MapContainer>
