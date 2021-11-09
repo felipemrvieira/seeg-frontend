@@ -7,6 +7,7 @@ export const Container = styled.div`
 	width: 100%;
 	position: relative;
 	/* background: lightblue; */
+	min-height: 80vh;
 	justify-content: space-between;
 	/* padding: 10px; */
 	.leaflet-container {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import { Container } from './styles';
@@ -9,6 +8,7 @@ import MapYearFilter from '../../components/MapYearFilter';
 import 'leaflet/dist/leaflet.css';
 import api from '../../services/api';
 import { MapInfoInterface } from './interfaces';
+import Map from '../../components/Map';
 
 const State: React.FC = () => {
 	const [mapInfo, setMapInfo] = useState<MapInfoInterface>({
@@ -46,18 +46,7 @@ const State: React.FC = () => {
 		<>
 			<Nav />
 			<Container>
-				<MapContainer
-					zoomControl={false}
-					center={[-14.1403536, -53.5436177]}
-					zoom={4}
-					scrollWheelZoom={false}
-				>
-					<ZoomControl position="topright" />
-					<TileLayer
-						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
-						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-					/>
-				</MapContainer>
+				<Map />
 				<MapFilters
 					sectors={mapInfo.sectors}
 					gases={mapInfo.gases}
