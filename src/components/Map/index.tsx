@@ -6,9 +6,10 @@ import {
 	WMSTileLayer,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { MapInfo } from './interfaces';
 
-const Map: React.FC = () => {
-	const [isCity, setIsCity] = useState(false);
+const Map: React.FC<MapInfo> = ({ activeSector, activeGas, activeYear }) => {
+	const [isCity, setIsCity] = useState(true);
 	const [showTiles, setShowTiles] = useState(false);
 
 	useEffect(() => {
@@ -24,7 +25,13 @@ const Map: React.FC = () => {
 			: 'seeg8-br-plataform-staging:seeg8-staging-geoserver-states';
 	}
 
-	const layerParams = 'year=2019 and sector_id=0 and gas_id=6';
+	const layerParams = `year=${activeYear} and sector_id=${activeSector?.id} and gas_id=${activeGas}`;
+	// const layerParams = 'year=2019 and sector_id=0 and gas_id=6';
+
+	if (showTiles && activeSector) {
+		console.log(layerParams);
+	}
+
 	return (
 		<>
 			<MapContainer
@@ -38,12 +45,11 @@ const Map: React.FC = () => {
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				{showTiles && (
+				{showTiles && activeSector && (
 					<>
 						<WMSTileLayer
 							url={`https://geoserver.ecostage.com.br/geoserver/ows?cql_filter=${layerParams}`}
 							layers={layerName()}
-							// cql_filter="year=2020 and sector_id=0 and gas_id=6"
 							format="image/png"
 							transparent
 						/>

@@ -58,9 +58,9 @@ const IconOption: React.FC = (props: any) => {
 const MapFilters: React.FC<MapInfo> = ({
 	sectors,
 	gases,
-	// activeSector,
-	// activeGas,
-	// activeYear,
+	activeSector,
+	activeGas,
+	activeYear,
 }) => {
 	const sectorOptions = sectors.map((item) => ({
 		value: item.id,
@@ -75,6 +75,7 @@ const MapFilters: React.FC<MapInfo> = ({
 
 	const defaultSectorValue = sectorOptions[0];
 	const defaultGasValue = gasOptions[0];
+
 	return (
 		<Container>
 			<Box>

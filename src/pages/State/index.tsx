@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import { Container } from './styles';
@@ -17,7 +17,7 @@ const State: React.FC = () => {
 		defaultEmissionType: 'CO2',
 		defaultGas: 0,
 		defaultSector: 0,
-		defaultYear: 2020,
+		defaultYear: 2019,
 		sectors: [],
 		emissionsTypes: [],
 		gases: [],
@@ -38,6 +38,23 @@ const State: React.FC = () => {
 		return mapInfo && mapInfo.sectors.filter((obj) => obj.id === 0)[0];
 	}
 
+	// function updateMapInfo(updatedValue: MapInfoInterface) {
+	// 	setMapInfo({
+	// 		...mapInfo,
+	// 		...updatedValue,
+	// 	});
+	// 	console.log(mapInfo);
+	// }
+
+	const updateMapInfo = useCallback((updatedValue) => {
+		setMapInfo({
+			...mapInfo,
+			...updatedValue,
+		});
+		console.log(mapInfo);
+		console.log(updatedValue);
+	}, []);
+
 	useEffect(() => {
 		loadStateMapInfo();
 	}, []);
@@ -46,7 +63,11 @@ const State: React.FC = () => {
 		<>
 			<Nav />
 			<Container>
-				<Map />
+				<Map
+					activeSector={activeSector()}
+					activeGas={mapInfo.defaultGas}
+					activeYear={mapInfo.defaultYear}
+				/>
 				<MapFilters
 					sectors={mapInfo.sectors}
 					gases={mapInfo.gases}
@@ -60,7 +81,10 @@ const State: React.FC = () => {
 					activeYear={mapInfo.defaultYear}
 				/>
 			</Container>
-			<MapYearFilter />
+			<MapYearFilter
+				activeYear={mapInfo.defaultYear}
+				updateYear={updateMapInfo}
+			/>
 			<Footer />
 		</>
 	);
