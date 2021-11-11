@@ -23,7 +23,6 @@ export interface MapInfoInterface {
 	defaultEmissionType: string;
 	defaultGas: number;
 	defaultSector: number;
-	defaultYear: number;
 	sectors: Sector[];
 	emissionsTypes: EmissionType[];
 	gases: Gas[];

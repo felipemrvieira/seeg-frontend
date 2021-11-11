@@ -15,9 +15,8 @@ import {
 } from './styles';
 
 const MapYearFilter: React.FC<Props> = ({ activeYear, updateYear }) => {
-	const [rangeValue, setRangeValue] = useState<number>(activeYear);
 	const [value, setValue] = useState<number | string | Array<number | string>>(
-		2000
+		activeYear
 	);
 
 	const handleSliderChange = (event: Event, newValue: number | number[]) => {
@@ -28,13 +27,14 @@ const MapYearFilter: React.FC<Props> = ({ activeYear, updateYear }) => {
 		setValue(event.target.value === '' ? '' : Number(event.target.value));
 	};
 
-	// const handleBlur = () => {
-	// 	if (value < 0) {
-	// 		setValue(0);
-	// 	} else if (value > 100) {
-	// 		setValue(100);
-	// 	}
-	// };
+	const handleBlur = () => {
+		if (value < 1970) {
+			setValue(1970);
+		} else if (value > 2020) {
+			setValue(2020);
+		}
+		updateYear(+value);
+	};
 
 	return (
 		<>
@@ -45,7 +45,8 @@ const MapYearFilter: React.FC<Props> = ({ activeYear, updateYear }) => {
 					value={value}
 					size="small"
 					onChange={handleInputChange}
-					// onBlur={handleBlur}
+					onBlur={handleBlur}
+					onMouseOut={handleBlur}
 					inputProps={{
 						step: 1,
 						min: 1970,
@@ -58,6 +59,7 @@ const MapYearFilter: React.FC<Props> = ({ activeYear, updateYear }) => {
 					aria-label="Year"
 					value={typeof value === 'number' ? value : 0}
 					onChange={handleSliderChange}
+					onChangeCommitted={() => updateYear(+value)}
 					valueLabelDisplay="auto"
 					marks
 					step={1}

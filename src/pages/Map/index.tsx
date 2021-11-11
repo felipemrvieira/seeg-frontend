@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import { Container } from './styles';
@@ -17,7 +17,6 @@ const MapPage: React.FC = () => {
 		defaultEmissionType: 'CO2',
 		defaultGas: 0,
 		defaultSector: 0,
-		defaultYear: 2019,
 		sectors: [],
 		emissionsTypes: [],
 		gases: [],
@@ -25,18 +24,20 @@ const MapPage: React.FC = () => {
 	});
 
 	const [isCity, setIsCity] = useState(false);
+	const [defaultYear, setDefaultYear] = useState(2019);
+
+	function activeSector() {
+		return mapInfo.sectors && mapInfo.sectors.filter((obj) => obj.id === 0)[0];
+	}
 
 	async function loadStateMapInfo() {
 		try {
 			const response = await api.get('/map');
 			setMapInfo(response.data);
+			setDefaultYear(response.data.defaultYear);
 		} catch (err) {
 			// console.tron.log(err);
 		}
-	}
-
-	function activeSector() {
-		return mapInfo && mapInfo.sectors.filter((obj) => obj.id === 0)[0];
 	}
 
 	const updateMapInfo = useCallback((updatedValue) => {
@@ -44,6 +45,10 @@ const MapPage: React.FC = () => {
 			...mapInfo,
 			...updatedValue,
 		});
+	}, []);
+
+	const updatDefaultYear = useCallback((updatedValue) => {
+		setDefaultYear(updatedValue);
 	}, []);
 
 	const updateTerritoryType = useCallback((value) => {
@@ -61,28 +66,25 @@ const MapPage: React.FC = () => {
 				<Map
 					activeSector={activeSector()}
 					activeGas={mapInfo.defaultGas}
-					activeYear={mapInfo.defaultYear}
+					activeYear={defaultYear}
 					isCity={isCity}
 				/>
+				{/* {memoizedMapFilter} */}
 				<MapFilters
 					sectors={mapInfo.sectors}
 					gases={mapInfo.gases}
 					activeSector={activeSector()}
 					activeGas={mapInfo.defaultGas}
-					activeYear={mapInfo.defaultYear}
-					isCity={isCity}
 					updateTerritoryType={updateTerritoryType}
+					isCity={isCity}
 				/>
 				<MapLegend
 					activeSector={activeSector()}
 					activeGas={mapInfo.defaultGas}
-					activeYear={mapInfo.defaultYear}
+					activeYear={defaultYear}
 				/>
 			</Container>
-			<MapYearFilter
-				activeYear={mapInfo.defaultYear}
-				updateYear={updateMapInfo}
-			/>
+			<MapYearFilter activeYear={defaultYear} updateYear={updatDefaultYear} />
 			<Footer />
 		</>
 	);

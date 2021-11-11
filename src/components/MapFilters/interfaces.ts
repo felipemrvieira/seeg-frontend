@@ -16,7 +16,6 @@ export interface ActiveSector {
 
 export interface MapInfo {
 	activeSector: ActiveSector;
-	activeYear: number;
 	activeGas: number;
 	sectors: Sector[];
 	gases: Gas[];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { components } from 'react-select';
 import ContentLoader from 'react-content-loader';
 import Switch from '@mui/material/Switch';
@@ -61,7 +61,6 @@ const MapFilters: React.FC<MapInfo> = ({
 	gases,
 	activeSector,
 	activeGas,
-	activeYear,
 	isCity,
 	updateTerritoryType,
 }) => {
@@ -82,6 +81,8 @@ const MapFilters: React.FC<MapInfo> = ({
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateTerritoryType(event.target.checked);
 	};
+
+	console.log(sectors);
 
 	return (
 		<Container>
