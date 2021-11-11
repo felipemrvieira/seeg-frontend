@@ -20,4 +20,6 @@ export interface MapInfo {
 	activeGas: number;
 	sectors: Sector[];
 	gases: Gas[];
+	isCity: boolean;
+	updateTerritoryType: (type: boolean) => void;
 }

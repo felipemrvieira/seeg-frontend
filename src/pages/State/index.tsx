@@ -24,6 +24,8 @@ const State: React.FC = () => {
 		states: [],
 	});
 
+	const [isCity, setIsCity] = useState(true);
+
 	async function loadStateMapInfo() {
 		try {
 			const response = await api.get('/map');
@@ -38,21 +40,15 @@ const State: React.FC = () => {
 		return mapInfo && mapInfo.sectors.filter((obj) => obj.id === 0)[0];
 	}
 
-	// function updateMapInfo(updatedValue: MapInfoInterface) {
-	// 	setMapInfo({
-	// 		...mapInfo,
-	// 		...updatedValue,
-	// 	});
-	// 	console.log(mapInfo);
-	// }
-
 	const updateMapInfo = useCallback((updatedValue) => {
 		setMapInfo({
 			...mapInfo,
 			...updatedValue,
 		});
-		console.log(mapInfo);
-		console.log(updatedValue);
+	}, []);
+
+	const updateTerritoryType = useCallback((value) => {
+		setIsCity(value);
 	}, []);
 
 	useEffect(() => {
@@ -67,6 +63,7 @@ const State: React.FC = () => {
 					activeSector={activeSector()}
 					activeGas={mapInfo.defaultGas}
 					activeYear={mapInfo.defaultYear}
+					isCity={isCity}
 				/>
 				<MapFilters
 					sectors={mapInfo.sectors}
@@ -74,6 +71,8 @@ const State: React.FC = () => {
 					activeSector={activeSector()}
 					activeGas={mapInfo.defaultGas}
 					activeYear={mapInfo.defaultYear}
+					isCity={isCity}
+					updateTerritoryType={updateTerritoryType}
 				/>
 				<MapLegend
 					activeSector={activeSector()}

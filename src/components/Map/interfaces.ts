@@ -7,4 +7,5 @@ export interface MapInfo {
 	activeSector: ActiveSector;
 	activeYear: number;
 	activeGas: number;
+	isCity: boolean;
 }

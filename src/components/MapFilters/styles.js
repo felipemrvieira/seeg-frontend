@@ -30,6 +30,18 @@ export const Box = styled.div`
 	.boxContent {
 		padding: 10px;
 	}
+	.boxSwitch {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		p {
+			font-size: 13.5px;
+			font-weight: 400;
+			font-family: Lato, sans-serif;
+			color: #333333;
+		}
+	}
 `;
 
 export const Select = styled(ReactSelect)`

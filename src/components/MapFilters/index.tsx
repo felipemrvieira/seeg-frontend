@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { components } from 'react-select';
 import ContentLoader from 'react-content-loader';
+import Switch from '@mui/material/Switch';
 import { Container, Box, Select } from './styles';
 import all from '../../assets/img/icon-bubble-color.svg';
 import energia from '../../assets/img/icon-energy-color.svg';
@@ -61,6 +62,8 @@ const MapFilters: React.FC<MapInfo> = ({
 	activeSector,
 	activeGas,
 	activeYear,
+	isCity,
+	updateTerritoryType,
 }) => {
 	const sectorOptions = sectors.map((item) => ({
 		value: item.id,
@@ -76,8 +79,24 @@ const MapFilters: React.FC<MapInfo> = ({
 	const defaultSectorValue = sectorOptions[0];
 	const defaultGasValue = gasOptions[0];
 
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		updateTerritoryType(event.target.checked);
+	};
+
 	return (
 		<Container>
+			<Box>
+				<div className="boxHeader">Território</div>
+				<div className="boxContent boxSwitch">
+					<p>Estados</p>
+					<Switch
+						checked={isCity}
+						onChange={handleChange}
+						inputProps={{ 'aria-label': 'controlled' }}
+					/>
+					<p>Cidades</p>
+				</div>
+			</Box>
 			<Box>
 				<div className="boxHeader">Setor</div>
 				<div className="boxContent">

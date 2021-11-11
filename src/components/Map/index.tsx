@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
 	MapContainer,
 	TileLayer,
@@ -8,8 +8,12 @@ import {
 import 'leaflet/dist/leaflet.css';
 import { MapInfo } from './interfaces';
 
-const Map: React.FC<MapInfo> = ({ activeSector, activeGas, activeYear }) => {
-	const [isCity, setIsCity] = useState(true);
+const Map: React.FC<MapInfo> = ({
+	activeSector,
+	activeGas,
+	activeYear,
+	isCity,
+}) => {
 	const [showTiles, setShowTiles] = useState(false);
 
 	useEffect(() => {
@@ -19,18 +23,38 @@ const Map: React.FC<MapInfo> = ({ activeSector, activeGas, activeYear }) => {
 		}, 1000);
 	}, []);
 
-	function layerName() {
-		return isCity
-			? 'seeg-latest-version:geoserver_cities'
-			: 'seeg8-br-plataform-staging:seeg8-staging-geoserver-states';
-	}
+	useEffect(() => {
+		setShowTiles(false);
+		setTimeout(() => {
+			setShowTiles(true);
+		}, 100);
+	}, [isCity]);
 
 	const layerParams = `year=${activeYear} and sector_id=${activeSector?.id} and gas_id=${activeGas}`;
-	// const layerParams = 'year=2019 and sector_id=0 and gas_id=6';
 
-	if (showTiles && activeSector) {
-		console.log(layerParams);
-	}
+	const memoizedStateTile = useMemo(
+		() => (
+			<WMSTileLayer
+				url={`https://geoserver.ecostage.com.br/geoserver/ows?cql_filter=${layerParams}`}
+				layers="seeg8-br-plataform-staging:seeg8-staging-geoserver-states"
+				format="image/png"
+				transparent
+			/>
+		),
+		[activeSector, activeYear, activeGas]
+	);
+
+	const memoizedCityTile = useMemo(
+		() => (
+			<WMSTileLayer
+				url={`https://geoserver.ecostage.com.br/geoserver/ows?cql_filter=${layerParams}`}
+				layers="seeg-latest-version:geoserver_cities"
+				format="image/png"
+				transparent
+			/>
+		),
+		[activeSector, activeYear, activeGas]
+	);
 
 	return (
 		<>
@@ -47,12 +71,8 @@ const Map: React.FC<MapInfo> = ({ activeSector, activeGas, activeYear }) => {
 				/>
 				{showTiles && activeSector && (
 					<>
-						<WMSTileLayer
-							url={`https://geoserver.ecostage.com.br/geoserver/ows?cql_filter=${layerParams}`}
-							layers={layerName()}
-							format="image/png"
-							transparent
-						/>
+						{isCity ? memoizedCityTile : memoizedStateTile}
+
 						{/* <WMSTileLayer
 							url="https://geoserver.ecostage.com.br/geoserver/ows?"
 							layers="seeg-latest-version:dashboard_states-static-layer"
