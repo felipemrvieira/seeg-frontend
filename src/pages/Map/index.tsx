@@ -10,7 +10,7 @@ import api from '../../services/api';
 import { MapInfoInterface } from './interfaces';
 import Map from '../../components/Map';
 
-const State: React.FC = () => {
+const MapPage: React.FC = () => {
 	const [mapInfo, setMapInfo] = useState<MapInfoInterface>({
 		activeLevel: 0,
 		allSectorsColor: '#00a8ff',
@@ -24,13 +24,12 @@ const State: React.FC = () => {
 		states: [],
 	});
 
-	const [isCity, setIsCity] = useState(true);
+	const [isCity, setIsCity] = useState(false);
 
 	async function loadStateMapInfo() {
 		try {
 			const response = await api.get('/map');
 			setMapInfo(response.data);
-			console.log(response.data);
 		} catch (err) {
 			// console.tron.log(err);
 		}
@@ -89,4 +88,4 @@ const State: React.FC = () => {
 	);
 };
 
-export default State;
+export default MapPage;

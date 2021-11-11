@@ -25,6 +25,7 @@ const Map: React.FC<MapInfo> = ({
 
 	useEffect(() => {
 		setShowTiles(false);
+		// Add delay to re-render tiles
 		setTimeout(() => {
 			setShowTiles(true);
 		}, 100);

@@ -4,7 +4,7 @@ import { useLocation, Switch } from 'react-router-dom';
 import Route from './Route';
 
 // Open routes
-import State from '../pages/State';
+import MapPage from '../pages/Map';
 
 export default function Routes() {
 	const { pathname } = useLocation();
@@ -15,8 +15,8 @@ export default function Routes() {
 
 	return (
 		<Switch>
-			<Route path="/" exact component={State} />
-			<Route path="/state" exact component={State} />
+			<Route path="/" exact component={MapPage} />
+			<Route path="/map" exact component={MapPage} />
 			{/* <Route path="/user/register" component={UserRegister} isPrivate /> */}
 		</Switch>
 	);
