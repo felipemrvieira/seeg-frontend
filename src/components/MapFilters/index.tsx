@@ -10,7 +10,7 @@ import processosIndustriais from '../../assets/img/icon-factory-color.svg';
 import residuos from '../../assets/img/icon-trash-color.svg';
 import mudancaDeUsoDaTerraEFloresta from '../../assets/img/icon-tree-color.svg';
 import SelectItem from '../SelectItem';
-import { MapInfo } from './interfaces';
+import { SectorSelectItem, GasSelectItem, MapInfo } from './interfaces';
 
 const SelectLoader = () => (
 	<ContentLoader
@@ -71,6 +71,8 @@ const MapFilters: React.FC<MapInfo> = ({
 	},
 	isCity,
 	updateTerritoryType,
+	updateDefaultSector,
+	updateDefaultGas,
 }) => {
 	const sectorOptions = sectors.map((item) => ({
 		value: item.id,
@@ -98,6 +100,13 @@ const MapFilters: React.FC<MapInfo> = ({
 		updateTerritoryType(event.target.checked);
 	};
 
+	const handleSectorChange = (sector: SectorSelectItem) => {
+		updateDefaultSector(sector.value);
+	};
+	const handleGasChange = (gas: GasSelectItem) => {
+		updateDefaultGas(gas.value);
+	};
+
 	return (
 		<Container>
 			<Box>
@@ -115,11 +124,12 @@ const MapFilters: React.FC<MapInfo> = ({
 			<Box>
 				<div className="boxHeader">Setor</div>
 				<div className="boxContent">
-					{defaultSectorValue ? (
+					{sectors.length > 0 ? (
 						<Select
 							defaultValue={defaultSectorValue}
 							options={sectorOptions}
 							components={{ Option: IconOption }}
+							onChange={handleSectorChange}
 						/>
 					) : (
 						<SelectLoader />
@@ -129,11 +139,12 @@ const MapFilters: React.FC<MapInfo> = ({
 			<Box>
 				<div className="boxHeader">Gas</div>
 				<div className="boxContent">
-					{defaultGasValue ? (
+					{gases.length > 0 ? (
 						<Select
 							defaultValue={defaultGasValue}
 							name="gas"
 							options={gasOptions}
+							onChange={handleGasChange}
 						/>
 					) : (
 						<SelectLoader />

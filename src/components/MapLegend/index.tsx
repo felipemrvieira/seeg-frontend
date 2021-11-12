@@ -49,9 +49,6 @@ const MapLegend: React.FC<MapInfo> = ({
 	const [loading, setLoading] = useState(true);
 
 	async function getInfos() {
-		console.log('getInfos');
-		console.log(activeYear);
-
 		try {
 			const params = {
 				sector: activeSector.slug,
@@ -72,11 +69,8 @@ const MapLegend: React.FC<MapInfo> = ({
 			});
 			setMapLegend(response.data);
 			setLoading(false);
-			console.log(response.data);
-			console.log('success');
 		} catch (err) {
 			// console.tron.log(err);
-			console.log(err);
 		}
 	}
 

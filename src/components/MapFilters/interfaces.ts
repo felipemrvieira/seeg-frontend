@@ -1,3 +1,12 @@
+export interface SectorSelectItem {
+	value: number;
+	name: string;
+}
+
+export interface GasSelectItem {
+	value: number;
+	name: string;
+}
 export interface Sector {
 	id: number;
 	name: string;
@@ -16,4 +25,6 @@ export interface MapInfo {
 	gases: Gas[];
 	isCity: boolean;
 	updateTerritoryType: (type: boolean) => void;
+	updateDefaultSector: (type: number) => void;
+	updateDefaultGas: (type: number) => void;
 }

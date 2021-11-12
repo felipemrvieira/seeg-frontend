@@ -21,8 +21,6 @@ export interface MapInfoInterface {
 	activeLevel: number;
 	allSectorsColor: string;
 	defaultEmissionType: string;
-	defaultGas: number;
-	defaultSector: number;
 	sectors: Sector[];
 	emissionsTypes: EmissionType[];
 	gases: Gas[];

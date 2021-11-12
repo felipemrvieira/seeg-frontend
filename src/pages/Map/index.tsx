@@ -15,8 +15,6 @@ const MapPage: React.FC = () => {
 		activeLevel: 0,
 		allSectorsColor: '#00a8ff',
 		defaultEmissionType: 'CO2',
-		defaultGas: 0,
-		defaultSector: 0,
 		sectors: [],
 		emissionsTypes: [],
 		gases: [],
@@ -25,18 +23,19 @@ const MapPage: React.FC = () => {
 
 	const [isCity, setIsCity] = useState(false);
 	const [defaultYear, setDefaultYear] = useState(2019);
+	const [defaultSector, setDefaultSector] = useState(0);
+	const [defaultGas, setDefaultGas] = useState(6);
 
 	function activeSector() {
 		return (
 			mapInfo.sectors &&
-			mapInfo.sectors.filter((obj) => obj.id === mapInfo.defaultSector)[0]
+			mapInfo.sectors.filter((obj) => obj.id === defaultSector)[0]
 		);
 	}
 
 	function activeGas() {
 		return (
-			mapInfo.gases &&
-			mapInfo.gases.filter((obj) => obj.id === mapInfo.defaultGas)[0]
+			mapInfo.gases && mapInfo.gases.filter((obj) => obj.id === defaultGas)[0]
 		);
 	}
 
@@ -45,6 +44,8 @@ const MapPage: React.FC = () => {
 			const response = await api.get('/map');
 			setMapInfo(response.data);
 			setDefaultYear(response.data.defaultYear);
+			setDefaultSector(response.data.defaultSector);
+			setDefaultGas(response.data.defaultGas);
 		} catch (err) {
 			// console.tron.log(err);
 		}
@@ -65,6 +66,14 @@ const MapPage: React.FC = () => {
 		setIsCity(value);
 	}, []);
 
+	const updateDefaultSector = useCallback((value) => {
+		setDefaultSector(value);
+	}, []);
+
+	const updateDefaultGas = useCallback((value) => {
+		setDefaultGas(value);
+	}, []);
+
 	useEffect(() => {
 		loadStateMapInfo();
 	}, []);
@@ -75,7 +84,7 @@ const MapPage: React.FC = () => {
 			<Container>
 				<Map
 					activeSector={activeSector()}
-					activeGas={mapInfo.defaultGas}
+					activeGas={defaultGas}
 					activeYear={defaultYear}
 					isCity={isCity}
 				/>
@@ -85,12 +94,14 @@ const MapPage: React.FC = () => {
 					gases={mapInfo.gases}
 					activeSector={activeSector()}
 					activeGas={activeGas()}
-					updateTerritoryType={updateTerritoryType}
 					isCity={isCity}
+					updateTerritoryType={updateTerritoryType}
+					updateDefaultSector={updateDefaultSector}
+					updateDefaultGas={updateDefaultGas}
 				/>
 				<MapLegend
 					activeSector={activeSector()}
-					activeGas={mapInfo.defaultGas}
+					activeGas={defaultGas}
 					activeYear={defaultYear}
 				/>
 			</Container>
