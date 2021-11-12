@@ -113,7 +113,7 @@ const MapLegend: React.FC<MapInfo> = ({
 							<span>0</span>
 							<span>{formatNumber(maxEmission, '.', ',', 0)}</span>
 						</Range>
-						<RangeGradient />
+						<RangeGradient sectorSlug={activeSector.slug} />
 						<BoxGradientNote>
 							As cores do mapa representam faixas de quantidade de emissões em
 							milhões de toneladas do GEE
