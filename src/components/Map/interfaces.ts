@@ -9,3 +9,7 @@ export interface MapInfo {
 	activeGas: number;
 	isCity: boolean;
 }
+export interface PositionState {
+	lat: number;
+	lng: number;
+}

@@ -6,9 +6,10 @@ import {
 	WMSTileLayer,
 	Marker,
 	Popup,
+	useMapEvents,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MapInfo } from './interfaces';
+import { MapInfo, PositionState } from './interfaces';
 
 const Map: React.FC<MapInfo> = ({
 	activeSector,
@@ -17,20 +18,27 @@ const Map: React.FC<MapInfo> = ({
 	isCity,
 }) => {
 	const [showTiles, setShowTiles] = useState(false);
-	const [popUpPosition, setPopUpPosition] = useState({
-		latitude: 0,
-		longitude: 0,
+	const [popUpPosition, setPopUpPosition] = useState<PositionState>({
+		lat: 0,
+		lng: 0,
 	});
 
-	// const map = useMapEvents({
-	// 	click(event) {
-	// 		const { lat, lng } = event.latlng;
-	// 		setPopUpPosition({
-	// 			latitude: lat,
-	// 			longitude: lng,
-	// 		});
-	// 	},
-	// });
+	const [showPopUp, setShowPopUp] = useState(false);
+
+	function MapEventsChildComponent() {
+		const map = useMapEvents({
+			popupclose: () => console.log('popupclose'),
+			click(event) {
+				const { lat, lng } = event.latlng;
+				setShowPopUp(true);
+				setPopUpPosition({
+					lat,
+					lng,
+				});
+			},
+		});
+		return null;
+	}
 
 	useEffect(() => {
 		// Add delay prevent map rendering wrong tiles
@@ -82,6 +90,7 @@ const Map: React.FC<MapInfo> = ({
 				zoom={4}
 				scrollWheelZoom={false}
 			>
+				<MapEventsChildComponent />
 				<ZoomControl position="topright" />
 				<TileLayer
 					attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
@@ -105,9 +114,13 @@ const Map: React.FC<MapInfo> = ({
 						/> */}
 					</>
 				)}
-				{/* <Popup position={[-18.5, -54]}>
-					A pretty CSS3 popup. <br /> Easily customizable.
-				</Popup> */}
+				{showPopUp && (
+					<Popup position={[popUpPosition.lat, popUpPosition.lng]}>
+						Latitude {popUpPosition.lat}.
+						<br />
+						Longitude {popUpPosition.lng}.
+					</Popup>
+				)}
 			</MapContainer>
 		</>
 	);
