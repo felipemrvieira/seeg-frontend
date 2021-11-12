@@ -29,9 +29,10 @@ const Map: React.FC<MapInfo> = ({
 		setTimeout(() => {
 			setShowTiles(true);
 		}, 100);
-	}, [isCity]);
+	}, [isCity, activeSector, activeGas, activeYear]);
 
 	const layerParams = `year=${activeYear} and sector_id=${activeSector?.id} and gas_id=${activeGas}`;
+	// console.log(layerParams);
 
 	const memoizedStateTile = useMemo(
 		() => (

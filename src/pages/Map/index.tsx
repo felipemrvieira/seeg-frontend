@@ -27,7 +27,17 @@ const MapPage: React.FC = () => {
 	const [defaultYear, setDefaultYear] = useState(2019);
 
 	function activeSector() {
-		return mapInfo.sectors && mapInfo.sectors.filter((obj) => obj.id === 0)[0];
+		return (
+			mapInfo.sectors &&
+			mapInfo.sectors.filter((obj) => obj.id === mapInfo.defaultSector)[0]
+		);
+	}
+
+	function activeGas() {
+		return (
+			mapInfo.gases &&
+			mapInfo.gases.filter((obj) => obj.id === mapInfo.defaultGas)[0]
+		);
 	}
 
 	async function loadStateMapInfo() {
@@ -74,7 +84,7 @@ const MapPage: React.FC = () => {
 					sectors={mapInfo.sectors}
 					gases={mapInfo.gases}
 					activeSector={activeSector()}
-					activeGas={mapInfo.defaultGas}
+					activeGas={activeGas()}
 					updateTerritoryType={updateTerritoryType}
 					isCity={isCity}
 				/>

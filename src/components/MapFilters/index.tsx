@@ -59,8 +59,16 @@ const IconOption: React.FC = (props: any) => {
 const MapFilters: React.FC<MapInfo> = ({
 	sectors,
 	gases,
-	activeSector,
-	activeGas,
+	activeSector = {
+		id: 0,
+		name: 'Total Emissions',
+		slug: 'all',
+	},
+	activeGas = {
+		id: 6,
+		name: 'CO2e (t) GWP-AR5',
+		slug: 'co2e-t-gwp-ar5',
+	},
 	isCity,
 	updateTerritoryType,
 }) => {
@@ -75,14 +83,20 @@ const MapFilters: React.FC<MapInfo> = ({
 		label: item.name,
 	}));
 
-	const defaultSectorValue = sectorOptions[0];
-	const defaultGasValue = gasOptions[0];
+	const defaultSectorValue = {
+		value: activeSector.id,
+		label: activeSector.name,
+		icon: getIcon(activeSector.slug),
+	};
+
+	const defaultGasValue = {
+		value: activeGas.id,
+		label: activeGas.name,
+	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateTerritoryType(event.target.checked);
 	};
-
-	console.log(sectors);
 
 	return (
 		<Container>
@@ -117,7 +131,7 @@ const MapFilters: React.FC<MapInfo> = ({
 				<div className="boxContent">
 					{defaultGasValue ? (
 						<Select
-							defaultValue={gasOptions[0]}
+							defaultValue={defaultGasValue}
 							name="gas"
 							options={gasOptions}
 						/>

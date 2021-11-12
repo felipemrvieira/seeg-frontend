@@ -9,14 +9,9 @@ export interface Gas {
 	name: string;
 	slug: string;
 }
-
-export interface ActiveSector {
-	slug: string;
-}
-
 export interface MapInfo {
-	activeSector: ActiveSector;
-	activeGas: number;
+	activeSector: Sector;
+	activeGas: Gas;
 	sectors: Sector[];
 	gases: Gas[];
 	isCity: boolean;
