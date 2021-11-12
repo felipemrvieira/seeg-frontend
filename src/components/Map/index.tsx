@@ -4,6 +4,8 @@ import {
 	TileLayer,
 	ZoomControl,
 	WMSTileLayer,
+	Marker,
+	Popup,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapInfo } from './interfaces';
@@ -15,6 +17,20 @@ const Map: React.FC<MapInfo> = ({
 	isCity,
 }) => {
 	const [showTiles, setShowTiles] = useState(false);
+	const [popUpPosition, setPopUpPosition] = useState({
+		latitude: 0,
+		longitude: 0,
+	});
+
+	// const map = useMapEvents({
+	// 	click(event) {
+	// 		const { lat, lng } = event.latlng;
+	// 		setPopUpPosition({
+	// 			latitude: lat,
+	// 			longitude: lng,
+	// 		});
+	// 	},
+	// });
 
 	useEffect(() => {
 		// Add delay prevent map rendering wrong tiles
@@ -89,6 +105,9 @@ const Map: React.FC<MapInfo> = ({
 						/> */}
 					</>
 				)}
+				{/* <Popup position={[-18.5, -54]}>
+					A pretty CSS3 popup. <br /> Easily customizable.
+				</Popup> */}
 			</MapContainer>
 		</>
 	);
