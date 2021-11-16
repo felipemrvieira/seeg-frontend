@@ -5,11 +5,12 @@ import {
 	ZoomControl,
 	WMSTileLayer,
 	Marker,
-	Popup,
 	useMapEvents,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapInfo, PositionState } from './interfaces';
+import { StyledPop as Popup } from './styles';
+import Header from '../Header';
 
 const Map: React.FC<MapInfo> = ({
 	activeSector,
@@ -116,9 +117,38 @@ const Map: React.FC<MapInfo> = ({
 				)}
 				{showPopUp && (
 					<Popup position={[popUpPosition.lat, popUpPosition.lng]}>
-						Latitude {popUpPosition.lat}.
+						{/* Latitude {popUpPosition.lat}.
 						<br />
-						Longitude {popUpPosition.lng}.
+						Longitude {popUpPosition.lng}. */}
+						<div className="popUpHeader">
+							<img
+								src="https://s3-sa-east-1.amazonaws.com/seeg.ecostage.com.br/flags/15.jpg"
+								alt="flag"
+							/>
+							<span>Pará</span>
+						</div>
+						<div className="popUpTerritoryInfo">
+							<div className="info">
+								<div className="label">Total Pop.</div>
+								<div className="value">8,690,745</div>
+							</div>
+							<div className="info">
+								<div className="label">Area</div>
+								<div className="value">1,245,871</div>
+							</div>
+							<div className="info">
+								<div className="label">Ranking</div>
+								<div className="value">1</div>
+							</div>
+						</div>
+						<div className="popUpEmissionInfo">
+							<div className="label">Emissions allocated in the state</div>
+							<div className="value">416.987.095 ton</div>
+						</div>
+						<div className="popUpGraphic">asd</div>
+						<div className="popUpButton">
+							<a href="/">View territory details</a>
+						</div>
 					</Popup>
 				)}
 			</MapContainer>
