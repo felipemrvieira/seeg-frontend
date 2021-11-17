@@ -12,10 +12,17 @@ import 'leaflet/dist/leaflet.css';
 import NumberFormat from 'react-number-format';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 import { MapInfo, PositionState } from './interfaces';
 import { StyledPop as Popup } from './styles';
 import Header from '../Header';
 import api from '../../services/api';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
+	<MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+));
 
 const Map: React.FC<MapInfo> = ({
 	activeSector,
@@ -34,6 +41,7 @@ const Map: React.FC<MapInfo> = ({
 
 	const [showPopUp, setShowPopUp] = useState(false);
 	const [open, setOpen] = useState(false);
+	const [snackOpen, setSnackOpen] = useState(false);
 	const [popUpInfo, setPopUpInfo] = useState({
 		area: 0,
 		gas_id: 0,
@@ -101,20 +109,16 @@ const Map: React.FC<MapInfo> = ({
 				], // essas são todas as props disponíveis para serem consultadas. "id" é um territory_id
 			];
 
-			try {
-				const response = await axios.get(
-					`${urlPath}?${params.map((e) => e.join('=')).join('&')}`
-				);
-				console.log(response.data.features[0].properties);
-				setPopUpInfo(response.data.features[0].properties);
-				getPopUpChartInfo(response.data.features[0].properties.slug);
-			} catch (error) {
-				// add error handling
-				setOpen(false);
-				console.log(error);
-			}
+			const response = await axios.get(
+				`${urlPath}?${params.map((e) => e.join('=')).join('&')}`
+			);
+			console.log(response.data.features[0].properties);
+			setPopUpInfo(response.data.features[0].properties);
+			getPopUpChartInfo(response.data.features[0].properties.slug);
 		} catch (err) {
-			// console.tron.log(err);
+			setOpen(false);
+			setSnackOpen(true);
+			console.log(err);
 		}
 	}
 
@@ -203,8 +207,30 @@ const Map: React.FC<MapInfo> = ({
 		[activeSector, activeYear, activeGas]
 	);
 
+	const handleSnackClose = (event?: React.SyntheticEvent, reason?: string) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setSnackOpen(false);
+	};
+
 	return (
 		<>
+			<Snackbar
+				open={snackOpen}
+				autoHideDuration={3000}
+				onClose={handleClose}
+				anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+			>
+				<Alert
+					onClose={handleSnackClose}
+					severity="warning"
+					sx={{ width: '100%' }}
+				>
+					Invalid territory!
+				</Alert>
+			</Snackbar>
 			<Backdrop
 				sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
 				open={open}
