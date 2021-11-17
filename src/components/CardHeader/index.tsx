@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import MapYearFilter from '../MapYearFilter';
 
 import { Container } from './styles';
 
 const CardHeader: React.FC = () => {
-	console.log('ads');
+	const [defaultYear, setDefaultYear] = useState(2019);
+
+	const updatDefaultYear = useCallback((updatedValue) => {
+		setDefaultYear(updatedValue);
+	}, []);
 
 	return (
 		<Container>
@@ -62,6 +67,7 @@ const CardHeader: React.FC = () => {
 					</p>
 				</div>
 			</div>
+			<MapYearFilter activeYear={defaultYear} updateYear={updatDefaultYear} />
 		</Container>
 	);
 };

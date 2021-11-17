@@ -41,6 +41,7 @@ export const Container = styled.div`
 		flex-direction: row;
 		width: 100%;
 		justify-content: space-between;
+		margin-bottom: 18px;
 		.mainBoxContainer {
 			flex: 1;
 			.mainBox {
