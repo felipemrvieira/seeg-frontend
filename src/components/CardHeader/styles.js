@@ -41,13 +41,84 @@ export const Container = styled.div`
 		flex-direction: row;
 		width: 100%;
 		justify-content: space-between;
-		.mainBox {
-			background: red;
+		.mainBoxContainer {
 			flex: 1;
+			.mainBox {
+				background: #f9fafa;
+				margin-right: 18px;
+				.info {
+					padding: 6px 20px;
+					display: flex;
+					flex-direction: row;
+					+ .info {
+						border-top: 1px solid #ccc;
+					}
+					span {
+						line-height: 40px;
+						font-size: 0.875em;
+						font-weight: 300;
+						color: #1e2229;
+						text-transform: uppercase;
+						margin-right: 4px;
+					}
+					p {
+						line-height: 40px;
+						font-size: 0.875em;
+						font-weight: 300;
+						color: #1e2229;
+						text-transform: uppercase;
+						font-weight: 700;
+					}
+				}
+			}
 		}
-		.subBoxes {
-			background: blue;
+		.subBoxesContainer {
 			flex: 2;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+
+			p {
+				font-size: 14px;
+				text-align: center;
+				color: #444;
+				font-family: 'Lato', sans-serif;
+			}
+			.content {
+				display: flex;
+				flex: 1;
+				flex-direction: row;
+				justify-content: space-between;
+				margin-bottom: 18px;
+			}
+			.subBox {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				text-align: center;
+				+ .subBox {
+					margin-left: 18px;
+				}
+				.label {
+					flex: 1;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					font-size: 0.875em;
+					color: #00a9e2;
+					background: #fff;
+				}
+				.value {
+					flex: 1;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					font-size: 1em;
+					font-weight: bold;
+					color: #1e2229;
+					background: #f9fafa;
+				}
+			}
 		}
 	}
 `;
