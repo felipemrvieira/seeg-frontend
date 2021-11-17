@@ -9,7 +9,6 @@ import {
 	useMap,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import NumberFormat from 'react-number-format';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
@@ -326,23 +325,17 @@ const Map: React.FC<MapInfo> = ({
 							<div className="info">
 								<div className="label">Total Pop.</div>
 								<div className="value">
-									<NumberFormat
-										thousandSeparator
-										prefix=""
-										displayType="text"
-										value={popUpInfo.total_population}
-									/>
+									{popUpInfo.total_population
+										.toString()
+										.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 								</div>
 							</div>
 							<div className="info">
 								<div className="label">Area</div>
 								<div className="value">
-									<NumberFormat
-										thousandSeparator
-										prefix=""
-										displayType="text"
-										value={popUpInfo.area}
-									/>
+									{popUpInfo.area
+										.toString()
+										.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 								</div>
 							</div>
 							<div className="info">
@@ -353,13 +346,7 @@ const Map: React.FC<MapInfo> = ({
 						<div className="popUpEmissionInfo">
 							<div className="label">Emissions allocated in the state</div>
 							<div className="value">
-								<NumberFormat
-									thousandSeparator
-									prefix=""
-									displayType="text"
-									value={totalAllocatedEmission?.replaceAll('.', '')}
-								/>{' '}
-								ton
+								{totalAllocatedEmission.replaceAll('.', ',')} ton
 							</div>
 						</div>
 						<div className="popUpGraphic">
