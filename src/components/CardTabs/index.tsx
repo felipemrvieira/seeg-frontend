@@ -3,7 +3,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Container } from './styles';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import HistoryIcon from '@mui/icons-material/History';
+import { Container, AntTabs, AntTab } from './styles';
 
 interface TabPanelProps {
 	children: React.ReactNode;
@@ -48,15 +50,43 @@ const CardHeader: React.FC = () => {
 	return (
 		<Container>
 			<Box sx={{ width: '100%' }}>
-				<Box>
-					<Tabs
+				<Box sx={{ width: '100%' }}>
+					{/* <Tabs
 						value={value}
 						onChange={handleChange}
 						aria-label="basic tabs example"
+						centered
 					>
-						<Tab label="Item One" {...a11yProps(0)} />
-						<Tab label="Item Two" {...a11yProps(1)} />
-					</Tabs>
+						<Tab
+							icon={<BarChartIcon />}
+							iconPosition="start"
+							label="Emissions Profile"
+							{...a11yProps(0)}
+						/>
+						<Tab
+							icon={<HistoryIcon />}
+							iconPosition="start"
+							label="Historical Emissions"
+							{...a11yProps(1)}
+						/>
+					</Tabs> */}
+					<AntTabs
+						value={value}
+						onChange={handleChange}
+						aria-label="ant example"
+						centered
+					>
+						<AntTab
+							icon={<BarChartIcon />}
+							iconPosition="start"
+							label="Emissions Profile"
+						/>
+						<AntTab
+							icon={<HistoryIcon />}
+							iconPosition="start"
+							label="Historical Emissions"
+						/>
+					</AntTabs>
 				</Box>
 				<TabPanel value={value} index={0}>
 					Item One
