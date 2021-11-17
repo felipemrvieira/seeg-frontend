@@ -36,9 +36,6 @@ const Map: React.FC<MapInfo> = ({
 		lat: 0,
 		lng: 0,
 	});
-	const layerName = isCity
-		? 'seeg-latest-version:geoserver_cities'
-		: 'seeg8-br-plataform-staging:seeg8-staging-geoserver-states';
 
 	const [showPopUp, setShowPopUp] = useState(false);
 	const [open, setOpen] = useState(false);
@@ -60,20 +57,54 @@ const Map: React.FC<MapInfo> = ({
 	});
 	const [totalAllocatedEmission, setTotalAllocatedEmission] = useState('0,0');
 	const [zoom, setZoom] = useState(4);
+	const [series, setSeries] = useState([
+		{
+			name: 'Energia',
+			value: 0,
+		},
+		{
+			name: 'Agropecuária',
+			value: 0,
+		},
+		{
+			name: 'Processos Industriais',
+			value: 0,
+		},
+		{
+			name: 'Resíduos',
+			value: 0,
+		},
+		{
+			name: 'Mudança de Uso da Terra e Florestas',
+			value: 0,
+		},
+	]);
+
+	const layerName = isCity
+		? 'seeg-latest-version:geoserver_cities'
+		: 'seeg8-br-plataform-staging:seeg8-staging-geoserver-states';
+
+	const valueSeries = series.map((item) => item.value);
+	const labelSeries = series.map((item) => item.name);
 
 	const options = {
-		labels: ['Comedy', 'Action', 'Romance', 'Drama', 'SciFi'],
+		labels: labelSeries,
 		legend: {
 			show: false,
 		},
+		tooltip: {
+			shared: true,
+			intersect: false,
+			y: {
+				formatter(y: number) {
+					if (typeof y !== 'undefined') {
+						return `${y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+					}
+					return y;
+				},
+			},
+		},
 	};
-	const series = [4, 5, 6, 1, 5]; // our data
-	// const [series, setSeries] = useState([
-	// 	{
-	// 		name: 'series-1',
-	// 		data: [30, 40, 45, 50, 49, 60, 70, 91],
-	// 	},
-	// ]);
 
 	const handleClose = () => {
 		setOpen(false);
@@ -85,7 +116,8 @@ const Map: React.FC<MapInfo> = ({
 			);
 
 			setTotalAllocatedEmission(response.data.total_allocated_emission);
-			console.log(response.data);
+			setSeries(response.data.series);
+			console.log(response.data.series);
 		} catch (err) {
 			// console.tron.log(err);
 		}
@@ -138,16 +170,11 @@ const Map: React.FC<MapInfo> = ({
 	}
 
 	function MapChildComponent() {
-		useEffect(() => {
-			console.log('Render Map Child');
-		}, []);
-
 		const map = useMap();
 		const mapEvents = useMapEvents({
 			popupopen: (e) => {
 				// getPopUpChartInfo();
 				setOpen(false);
-				console.log('open');
 			},
 			popupclose: (e) => {
 				setShowPopUp(false);
@@ -338,7 +365,7 @@ const Map: React.FC<MapInfo> = ({
 						<div className="popUpGraphic">
 							<Chart
 								options={options}
-								series={series}
+								series={valueSeries}
 								type="pie"
 								width="100%"
 							/>
