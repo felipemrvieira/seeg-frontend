@@ -15,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Chart from 'react-apexcharts';
+import { Link } from 'react-router-dom';
 import { MapInfo, PositionState } from './interfaces';
 import { StyledPop as Popup } from './styles';
 import Header from '../Header';
@@ -358,7 +359,7 @@ const Map: React.FC<MapInfo> = ({
 							/>
 						</div>
 						<div className="popUpButton">
-							<a href="/">View territory details</a>
+							<Link to="/card">View territory details</Link>
 						</div>
 					</Popup>
 				)}

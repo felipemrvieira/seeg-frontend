@@ -3,7 +3,10 @@ import styled from 'styled-components';
 export const Container = styled.div`
 	display: flex;
 	flex: 1;
-	flex-direction: column;
+	flex-direction: ol;
 	width: 100%;
-	overflow: hidden;
+	background: #ecf0f0;
+	min-height: 75vh;
+	justify-content: space-between;
+	/* padding: 10px; */
 `;
