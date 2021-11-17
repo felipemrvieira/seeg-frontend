@@ -15,6 +15,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+import Chart from 'react-apexcharts';
 import { MapInfo, PositionState } from './interfaces';
 import { StyledPop as Popup } from './styles';
 import Header from '../Header';
@@ -59,6 +60,26 @@ const Map: React.FC<MapInfo> = ({
 	});
 	const [totalAllocatedEmission, setTotalAllocatedEmission] = useState('0,0');
 	const [zoom, setZoom] = useState(4);
+
+	const options = {
+		toolbar: {
+			show: true,
+			tools: {
+				download: true,
+			},
+		},
+		labels: ['Comedy', 'Action', 'Romance', 'Drama', 'SciFi'],
+		legend: {
+			show: false,
+		},
+	};
+	const series = [4, 5, 6, 1, 5]; // our data
+	// const [series, setSeries] = useState([
+	// 	{
+	// 		name: 'series-1',
+	// 		data: [30, 40, 45, 50, 49, 60, 70, 91],
+	// 	},
+	// ]);
 
 	const handleClose = () => {
 		setOpen(false);
@@ -320,7 +341,14 @@ const Map: React.FC<MapInfo> = ({
 								ton
 							</div>
 						</div>
-						<div className="popUpGraphic">asd</div>
+						<div className="popUpGraphic">
+							<Chart
+								options={options}
+								series={series}
+								type="pie"
+								width="100%"
+							/>
+						</div>
 						<div className="popUpButton">
 							<a href="/">View territory details</a>
 						</div>
