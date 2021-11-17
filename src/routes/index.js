@@ -5,6 +5,7 @@ import Route from './Route';
 
 // Open routes
 import MapPage from '../pages/Map';
+import CardPage from '../pages/Card';
 
 export default function Routes() {
 	const { pathname } = useLocation();
@@ -17,6 +18,7 @@ export default function Routes() {
 		<Switch>
 			<Route path="/" exact component={MapPage} />
 			<Route path="/map" exact component={MapPage} />
+			<Route path="/card" exact component={CardPage} />
 			{/* <Route path="/user/register" component={UserRegister} isPrivate /> */}
 		</Switch>
 	);
