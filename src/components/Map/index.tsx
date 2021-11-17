@@ -62,12 +62,6 @@ const Map: React.FC<MapInfo> = ({
 	const [zoom, setZoom] = useState(4);
 
 	const options = {
-		toolbar: {
-			show: true,
-			tools: {
-				download: true,
-			},
-		},
 		labels: ['Comedy', 'Action', 'Romance', 'Drama', 'SciFi'],
 		legend: {
 			show: false,
@@ -241,7 +235,7 @@ const Map: React.FC<MapInfo> = ({
 			<Snackbar
 				open={snackOpen}
 				autoHideDuration={3000}
-				onClose={handleClose}
+				onClose={handleSnackClose}
 				anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
 			>
 				<Alert
