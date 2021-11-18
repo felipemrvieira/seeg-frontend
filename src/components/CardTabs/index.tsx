@@ -6,6 +6,12 @@ import HistoryIcon from '@mui/icons-material/History';
 import { Container, AntTabs, AntTab } from './styles';
 import EmissionsProfile from '../EmissionsProfile';
 import SectorCharts from '../SectorCharts';
+import StateAndCountryEmissions from '../StateAndCountryEmissions';
+import TerritoryEconomicActivities from '../TerritoryEconomicActivities';
+import StateHistoricalEmissions from '../StateHistoricalEmissions';
+import SectorLevelsEmissionsChart from '../SectorLevelsEmissionsChart';
+import TerritoryEmissionsChart from '../TerritoryEmissionsChart';
+import TerritoryEmissionsTable from '../TerritoryEmissionsTable';
 
 interface TabPanelProps {
 	children: React.ReactNode;
@@ -61,9 +67,14 @@ const CardHeader: React.FC = () => {
 				<TabPanel value={value} index={0}>
 					<EmissionsProfile />
 					<SectorCharts />
+					<StateAndCountryEmissions />
+					<TerritoryEconomicActivities />
+					<StateHistoricalEmissions />
+					<SectorLevelsEmissionsChart />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					Item Two
+					<TerritoryEmissionsChart />
+					<TerritoryEmissionsTable />
 				</TabPanel>
 			</Box>
 		</Container>
