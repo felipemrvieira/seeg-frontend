@@ -13,7 +13,6 @@ const CardPage: React.FC = () => (
 		<Container>
 			<CardHeader />
 			<CardTabs />
-			<p>sasas</p>
 		</Container>
 		<Footer />
 	</>

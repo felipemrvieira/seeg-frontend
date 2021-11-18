@@ -5,6 +5,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import HistoryIcon from '@mui/icons-material/History';
 import { Container, AntTabs, AntTab } from './styles';
 import EmissionsProfile from '../EmissionsProfile';
+import SectorCharts from '../SectorCharts';
 
 interface TabPanelProps {
 	children: React.ReactNode;
@@ -59,6 +60,7 @@ const CardHeader: React.FC = () => {
 				</Box>
 				<TabPanel value={value} index={0}>
 					<EmissionsProfile />
+					<SectorCharts />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
 					Item Two

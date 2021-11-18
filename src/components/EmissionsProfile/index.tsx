@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import Chart from 'react-apexcharts';
 import D3Map from '../D3Map';
 
