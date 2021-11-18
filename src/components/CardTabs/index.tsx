@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+
 import Box from '@mui/material/Box';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HistoryIcon from '@mui/icons-material/History';
 import { Container, AntTabs, AntTab } from './styles';
+import EmissionsProfile from '../EmissionsProfile';
 
 interface TabPanelProps {
 	children: React.ReactNode;
@@ -24,20 +23,9 @@ function TabPanel(props: TabPanelProps) {
 			aria-labelledby={`simple-tab-${index}`}
 			{...other}
 		>
-			{value === index && (
-				<Box sx={{ p: 3 }}>
-					<Typography>{children}</Typography>
-				</Box>
-			)}
+			{value === index && <>{children}</>}
 		</div>
 	);
-}
-
-function a11yProps(index: number) {
-	return {
-		id: `simple-tab-${index}`,
-		'aria-controls': `simple-tabpanel-${index}`,
-	};
 }
 
 const CardHeader: React.FC = () => {
@@ -51,29 +39,10 @@ const CardHeader: React.FC = () => {
 		<Container>
 			<Box sx={{ width: '100%' }}>
 				<Box sx={{ width: '100%' }}>
-					{/* <Tabs
-						value={value}
-						onChange={handleChange}
-						aria-label="basic tabs example"
-						centered
-					>
-						<Tab
-							icon={<BarChartIcon />}
-							iconPosition="start"
-							label="Emissions Profile"
-							{...a11yProps(0)}
-						/>
-						<Tab
-							icon={<HistoryIcon />}
-							iconPosition="start"
-							label="Historical Emissions"
-							{...a11yProps(1)}
-						/>
-					</Tabs> */}
 					<AntTabs
 						value={value}
 						onChange={handleChange}
-						aria-label="ant example"
+						aria-label="Ant tab"
 						centered
 					>
 						<AntTab
@@ -89,7 +58,7 @@ const CardHeader: React.FC = () => {
 					</AntTabs>
 				</Box>
 				<TabPanel value={value} index={0}>
-					Item One
+					<EmissionsProfile />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
 					Item Two

@@ -14,7 +14,7 @@ export const Container = styled.div`
 `;
 
 export const AntTabs = styled(Tabs)({
-	borderBottom: '1px solid #e8e8e8',
+	// borderBottom: '1px solid #e8e8e8',
 	'& .MuiTabs-indicator': {
 		backgroundColor: '#fa953a',
 	},
