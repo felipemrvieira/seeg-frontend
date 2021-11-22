@@ -20,16 +20,22 @@ export const Container = styled.div`
 		flex-wrap: wrap;
 		justify-content: space-between;
 		.sector {
+			flex: 1;
 			position: relative;
-			padding: 0 8px 120px;
+			padding: 0 8px 18px;
 
 			.header {
 				/* overflow: wrap; */
+				/* height: 60px; */
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				align-items: center;
 				.icon {
-					float: left;
-					margin-right: -60px;
+					/* float: left;
+					margin-right: -60px; */
 					/* display: inline-block; */
-					vertical-align: middle;
+					/* vertical-align: middle; */
 					width: 60px;
 					height: 60px;
 					background-size: 60px 60px;
@@ -50,15 +56,27 @@ export const Container = styled.div`
 					background-image: url(${energy});
 				}
 				.title {
-					display: inline-block;
-					max-width: 120px;
-					vertical-align: middle;
-					margin-left: 75px;
-					margin-bottom: 0;
+					/* display: inline-block; */
+					/* max-width: 120px; */
+					/* vertical-align: middle; */
+					/* margin-left: 75px; */
+					margin-bottom: 18px;
 					text-transform: uppercase;
 					font-weight: 300;
 					font-size: 24px;
 					overflow-wrap: break-word;
+				}
+			}
+			.infoWrapper {
+				padding: 2px 0;
+				/* margin-left: 70px; */
+				margin-top: 0;
+				margin-bottom: 0;
+				.info {
+					font-size: 10px;
+					.label {
+						padding: 7.5px 0 7.5px 10px;
+					}
 				}
 			}
 		}
