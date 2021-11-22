@@ -14,7 +14,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Button from '@mui/material/Button';
-import Chart from 'react-apexcharts';
 import { Link } from 'react-router-dom';
 import { MapInfo, PositionState } from './interfaces';
 import { StyledPop as Popup } from './styles';
@@ -270,7 +269,7 @@ const Map: React.FC<MapInfo> = ({
 					severity="warning"
 					sx={{ width: '100%' }}
 				>
-					Invalid territory!
+					Território inválido!
 				</Alert>
 			</Snackbar>
 			<Backdrop
@@ -327,7 +326,7 @@ const Map: React.FC<MapInfo> = ({
 								<div className="label">Total Pop.</div>
 								<div className="value">
 									{popUpInfo.total_population
-										.toString()
+										?.toString()
 										.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 								</div>
 							</div>
@@ -335,7 +334,7 @@ const Map: React.FC<MapInfo> = ({
 								<div className="label">Area</div>
 								<div className="value">
 									{popUpInfo.area
-										.toString()
+										?.toString()
 										.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 								</div>
 							</div>
@@ -347,17 +346,10 @@ const Map: React.FC<MapInfo> = ({
 						<div className="popUpEmissionInfo">
 							<div className="label">Emissions allocated in the state</div>
 							<div className="value">
-								{totalAllocatedEmission.replaceAll('.', ',')} ton
+								{totalAllocatedEmission?.replaceAll('.', ',')} ton
 							</div>
 						</div>
-						<div className="popUpGraphic">
-							<Chart
-								options={options}
-								series={valueSeries}
-								type="pie"
-								width="100%"
-							/>
-						</div>
+						<div className="popUpGraphic">Chart here</div>
 						<div className="popUpButton">
 							<Link to="/card">View territory details</Link>
 						</div>
