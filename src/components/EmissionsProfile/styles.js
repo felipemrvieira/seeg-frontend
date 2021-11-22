@@ -111,6 +111,30 @@ export const Container = styled.div`
 	}
 	.mainChart {
 		background: linear-gradient(to right, #c5696a, #dc7777);
-		height: 300px;
+		overflow-x: scroll;
+		width: 100%;
+		padding: 20px;
+		&::-webkit-scrollbar {
+			width: 10px;
+			height: 10px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background: white;
+
+			border-radius: 25px;
+		}
+		&::-webkit-scrollbar-thumb:hover {
+			background: #b3afb3;
+		}
+		&::-webkit-scrollbar-track {
+			background: #dc7777;
+			border-radius: 0px;
+			box-shadow: inset 0px 0px 0px 0px #f0f0f0;
+		}
+		p {
+			text-transform: uppercase;
+			font-size: 14px;
+			color: white;
+		}
 	}
 `;

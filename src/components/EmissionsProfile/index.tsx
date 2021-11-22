@@ -1,12 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { any } from 'prop-types';
+import axios from 'axios';
 import D3Map from '../D3Map';
+import api from '../../services/api';
 
 import { Container } from './styles';
 
 const EmissionsProfile: React.FC = () => {
 	const [defaultYear, setDefaultYear] = useState(2019);
+	const [isCities, setIsCities] = useState(false);
+
+	const [chartInfo2, setChartInfo2] = useState({
+		chart: {
+			type: 'column',
+			height: 360,
+			backgroundColor: 'none',
+		},
+		title: {
+			text: null,
+		},
+		xAxis: {
+			type: 'category',
+			labels: {
+				style: {
+					color: '#FFF',
+				},
+			},
+			lineColor: '#444',
+			gridLineColor: '#444',
+			tickColor: '#444',
+		},
+		yAxis: {
+			title: {
+				text: null,
+			},
+			labels: {
+				style: {
+					color: '#444',
+				},
+			},
+			lineColor: '#444',
+			gridLineColor: '#444',
+			tickColor: '#444',
+		},
+		series: [
+			{
+				name: 'Emissões',
+				// data: this.state.seriesData,
+				data: [
+					49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
+					95.6, 54.4, 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5,
+					216.4, 194.1, 95.6, 54.4,
+				],
+			},
+		],
+		tooltip: {
+			pointFormat: `{series.name}: <b>{point.y:,.0f}</b> ${
+				isCities ? 'MIL ' : 'M '
+			}tCO2e`,
+		},
+		legend: {
+			enabled: false,
+		},
+		plotOptions: {
+			series: {
+				borderWidth: 0,
+				dataLabels: {
+					enabled: true,
+					format: '{point.y:,.0f}',
+					shape: 'callout',
+					backgroundColor: 'rgba(51, 51, 51, 0.85)',
+					style: {
+						color: '#FFFFFF',
+						fontSize: '10px',
+						textOutline: 'none',
+					},
+				},
+				color: '#FFFFFF',
+			},
+		},
+		credits: {
+			enabled: false,
+		},
+		exporting: {
+			enabled: false,
+		},
+	});
+
 	const [chartInfo, setChartInfo] = useState({
 		chart: {
 			type: 'bar',
@@ -90,6 +172,33 @@ const EmissionsProfile: React.FC = () => {
 		],
 	});
 
+	// async function loadData() {
+	// 	const params = {
+	// 		economic_activities: [],
+	// 		gas: 6,
+	// 		sector: undefined,
+	// 		social_economic: '',
+	// 		territories: [26],
+	// 		emission_type: 'CO2',
+	// 		year: isCities ? [2000, 2018] : [1990, defaultYear],
+	// 	};
+
+	// 	try {
+	// 		const response = await axios.get(
+	// 			`localhost:3000/total_emission/emission`,
+	// 			{ params }
+	// 		);
+
+	// 		console.log(response.data);
+	// 	} catch (err) {
+	// 		// console.tron.log(err);
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	loadData();
+	// }, []);
+
 	return (
 		<Container>
 			<div className="infoWrapper">
@@ -109,7 +218,7 @@ const EmissionsProfile: React.FC = () => {
 									<span className="position">1ª</span>
 									<div className="positionInfo">
 										<div className="chart">
-											... ... ... ... ... ... ... ... ... ... ... ...
+											<div>... ... ... ... ... ... ... ... ... ... ... ...</div>
 										</div>
 										<div className="label">
 											Posição no ranking de emissões por estado
@@ -146,7 +255,16 @@ const EmissionsProfile: React.FC = () => {
 					<D3Map />
 				</div>
 			</div>
-			<div className="mainChart">Chart</div>
+			<div className="mainChart">
+				<p>
+					Emissões totais alocadas {!isCities ? 'no estado' : 'no município'} de{' '}
+					{!isCities ? '1990' : '2000'} A {defaultYear} (
+					{isCities ? 'Mil ' : 'M'}
+					<span className="lowercase">t</span>CO<sub>2</sub>
+					<span className="lowercase">e</span>)
+				</p>
+				<HighchartsReact highcharts={Highcharts} options={chartInfo2} />
+			</div>
 		</Container>
 	);
 };
