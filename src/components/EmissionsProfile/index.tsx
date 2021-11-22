@@ -102,6 +102,44 @@ const EmissionsProfile: React.FC = () => {
 					</div>
 					<div className="emissions">
 						<HighchartsReact highcharts={Highcharts} options={chartInfo} />
+						<div className="emissionsPercentages">
+							<div className="state">PA</div>
+							<div className="info">
+								<div className="ranking">
+									<span className="position">1ª</span>
+									<div className="positionInfo">
+										<div className="chart">
+											... ... ... ... ... ... ... ... ... ... ... ...
+										</div>
+										<div className="label">
+											Posição no ranking de emissões por estado
+										</div>
+									</div>
+								</div>
+								<div className="percentagesWrapper">
+									<div className="percentage">
+										<span className="strong">15.2%</span>
+										<span className="strong">da emissão bruta</span>
+										<span>299.5 M tCO2e</span>
+									</div>
+									<div className="percentage">
+										<span className="strong">15.2%</span>
+										<span className="strong">da emissão bruta</span>
+										<span>299.5 M tCO2e</span>
+									</div>
+									<div className="percentage">
+										<span className="strong">15.2%</span>
+										<span className="strong">da emissão bruta</span>
+										<span>299.5 M tCO2e</span>
+									</div>
+									<div className="percentage">
+										<span className="strong">15.2%</span>
+										<span className="strong">da emissão bruta</span>
+										<span>299.5 M tCO2e</span>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div className="map">
