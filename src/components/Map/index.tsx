@@ -82,35 +82,43 @@ const Map: React.FC<MapInfo> = ({
 	]);
 
 	const chartInfo = {
-		title: {
-			text: '',
-		},
 		chart: {
-			margin: [0, 0, 0, 0],
-			spacingBottom: 0,
-			spacingTop: 0,
-			spacingLeft: 0,
-			spacingRight: 0,
-			height: 148,
 			type: 'pie',
+		},
+		title: {
+			text: null,
+		},
+		series: [
+			{
+				data: series,
+				name: 'Emissões',
+			},
+		],
+		tooltip: {
+			pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>',
 		},
 		plotOptions: {
 			pie: {
 				allowPointSelect: true,
 				cursor: 'pointer',
+				showInLegend: true,
 				dataLabels: {
-					enabled: false,
+					enabled: true,
+					format: '{point.percentage:.0f}%',
+					distance: -30,
+					style: {
+						fontSize: '12px',
+						color: '#FFF',
+						textShadow:
+							'1px 1px #444, -1px -1px #444, -1px 1px #444, 1px -1px #444',
+					},
 				},
 			},
 		},
-		series: [
-			{
-				type: 'pie',
-				name: 'Emissões',
-				data: series,
-			},
-		],
 		credits: {
+			enabled: false,
+		},
+		exporting: {
 			enabled: false,
 		},
 	};
