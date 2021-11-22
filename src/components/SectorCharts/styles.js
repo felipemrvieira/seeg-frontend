@@ -71,7 +71,7 @@ export const Container = styled.div`
 				padding: 2px 0;
 				/* margin-left: 70px; */
 				margin-top: 0;
-				margin-bottom: 0;
+				margin-bottom: 18px;
 				.info {
 					font-size: 10px;
 					.label {
