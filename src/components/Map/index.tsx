@@ -15,6 +15,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import { MapInfo, PositionState } from './interfaces';
 import { StyledPop as Popup } from './styles';
 import Header from '../Header';
@@ -59,51 +61,63 @@ const Map: React.FC<MapInfo> = ({
 	const [series, setSeries] = useState([
 		{
 			name: 'Energia',
-			value: 0,
+			y: 123,
 		},
 		{
 			name: 'Agropecuária',
-			value: 0,
+			y: 123,
 		},
 		{
 			name: 'Processos Industriais',
-			value: 0,
+			y: 123,
 		},
 		{
 			name: 'Resíduos',
-			value: 0,
+			y: 123,
 		},
 		{
 			name: 'Mudança de Uso da Terra e Florestas',
-			value: 0,
+			y: 123,
 		},
 	]);
+
+	const chartInfo = {
+		title: {
+			text: '',
+		},
+		chart: {
+			margin: [0, 0, 0, 0],
+			spacingBottom: 0,
+			spacingTop: 0,
+			spacingLeft: 0,
+			spacingRight: 0,
+			height: 148,
+			type: 'pie',
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: false,
+				},
+			},
+		},
+		series: [
+			{
+				type: 'pie',
+				name: 'Emissões',
+				data: series,
+			},
+		],
+		credits: {
+			enabled: false,
+		},
+	};
 
 	const layerName = isCity
 		? 'seeg-latest-version:geoserver_cities'
 		: 'seeg8-br-plataform-staging:seeg8-staging-geoserver-states';
-
-	const valueSeries = series.map((item) => item.value);
-	const labelSeries = series.map((item) => item.name);
-
-	const options = {
-		labels: labelSeries,
-		legend: {
-			show: false,
-		},
-		tooltip: {
-			shared: true,
-			intersect: false,
-			y: {
-				formatter(y: number) {
-					if (typeof y !== 'undefined') {
-						return `${y.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
-					}
-					return y;
-				},
-			},
-		},
-	};
 
 	const handleClose = () => {
 		setOpen(false);
@@ -115,8 +129,18 @@ const Map: React.FC<MapInfo> = ({
 			);
 
 			setTotalAllocatedEmission(response.data.total_allocated_emission);
-			setSeries(response.data.series);
-			console.log(response.data.series);
+			// const parsedSeries = response.data.series.map((item: any) => {
+			// 	item.name;
+			// 	item.value;
+			// });
+
+			const parsedSeries = response.data.series.map((item: any) => ({
+				name: item.name,
+				y: item.value,
+			}));
+
+			setSeries(parsedSeries);
+			// console.log(response.data.series);
 		} catch (err) {
 			// console.tron.log(err);
 		}
@@ -349,7 +373,9 @@ const Map: React.FC<MapInfo> = ({
 								{totalAllocatedEmission?.replaceAll('.', ',')} ton
 							</div>
 						</div>
-						<div className="popUpGraphic">Chart here</div>
+						<div className="popUpGraphic">
+							<HighchartsReact highcharts={Highcharts} options={chartInfo} />
+						</div>
 						<div className="popUpButton">
 							<Link to="/card">View territory details</Link>
 						</div>
