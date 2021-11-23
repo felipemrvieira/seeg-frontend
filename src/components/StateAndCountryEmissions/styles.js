@@ -19,11 +19,24 @@ export const Container = styled.div`
 		}
 	}
 	.chartWrapper {
-		display: flex;
+		display: inline-flex;
 		flex-direction: row;
 		justify-content: space-between;
+		gap: 12px;
 		.chart {
 			flex: 1;
+			/* margin: 0 12px; */
+			max-width: 50%;
+			.chartHeader {
+				padding: 0.9375em 0;
+				margin-bottom: 0;
+				text-align: center;
+				font-size: 1em;
+				font-weight: 400;
+				text-transform: uppercase;
+				color: #444;
+				background: #ecf0f0;
+			}
 		}
 	}
 `;

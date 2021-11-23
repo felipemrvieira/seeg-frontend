@@ -81,9 +81,11 @@ const StateAndCountryEmissions: React.FC = () => {
 			</div>
 			<div className="chartWrapper">
 				<div className="chart">
+					<div className="chartHeader">Pará</div>
 					<HighchartsReact highcharts={Highcharts} options={chartInfo} />
 				</div>
 				<div className="chart">
+					<div className="chartHeader">Brasil</div>
 					<HighchartsReact highcharts={Highcharts} options={chartInfo} />
 				</div>
 			</div>
