@@ -1,65 +1,42 @@
 import styled from 'styled-components';
-import cow from '../../assets/img/icon-cow-dark.svg';
-import energy from '../../assets/img/icon-energy-dark.svg';
-import factory from '../../assets/img/icon-factory-dark.svg';
-import tree from '../../assets/img/icon-tree-dark.svg';
-import trash from '../../assets/img/icon-trash-dark.svg';
 
 export const Container = styled.div`
 	display: flex;
 	flex: 1;
 	flex-direction: column;
 	width: 100%;
-	background: #ecf0f0;
-	/* min-height: 75vh; */
+	background: white;
 	justify-content: space-between;
-	padding: 40px 22px;
-	background-color: #eff0f0;
-	.sectorsWrapper {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		.sector {
-			position: relative;
-			padding: 0 8px 120px;
+	.header {
+		margin-bottom: 18px;
+		color: #454e50;
+		text-transform: uppercase;
+		background: #eff0f0;
+		padding: 40px 22px;
 
-			.header {
-				/* overflow: wrap; */
-				.icon {
-					float: left;
-					margin-right: -60px;
-					/* display: inline-block; */
-					vertical-align: middle;
-					width: 60px;
-					height: 60px;
-					background-size: 60px 60px;
-				}
-				.cow {
-					background-image: url(${cow});
-				}
-				.tree {
-					background-image: url(${tree});
-				}
-				.trash {
-					background-image: url(${trash});
-				}
-				.factory {
-					background-image: url(${factory});
-				}
-				.energy {
-					background-image: url(${energy});
-				}
-				.title {
-					display: inline-block;
-					max-width: 120px;
-					vertical-align: middle;
-					margin-left: 75px;
-					margin-bottom: 0;
-					text-transform: uppercase;
-					font-weight: 300;
-					font-size: 24px;
-					overflow-wrap: break-word;
-				}
+		h2 {
+			font-weight: 700;
+		}
+		p {
+		}
+	}
+	.chartWrapper {
+		padding: 12px 22px;
+		display: inline-flex;
+		flex-direction: row;
+		justify-content: space-between;
+		.chart {
+			flex: 1;
+			/* margin: 0 12px; */
+			.chartHeader {
+				padding: 0.9375em 0;
+				margin-bottom: 0;
+				text-align: center;
+				font-size: 1em;
+				font-weight: 400;
+				text-transform: uppercase;
+				color: #444;
+				background: #ecf0f0;
 			}
 		}
 	}
