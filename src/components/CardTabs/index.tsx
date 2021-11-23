@@ -12,6 +12,7 @@ import StateHistoricalEmissions from '../StateHistoricalEmissions';
 import SectorLevelsEmissionsChart from '../SectorLevelsEmissionsChart';
 import TerritoryEmissionsChart from '../TerritoryEmissionsChart';
 import TerritoryEmissionsTable from '../TerritoryEmissionsTable';
+import ButtonArea from '../ButtonArea';
 
 interface TabPanelProps {
 	children: React.ReactNode;
@@ -71,6 +72,7 @@ const CardHeader: React.FC = () => {
 					<TerritoryEconomicActivities />
 					<StateHistoricalEmissions />
 					<SectorLevelsEmissionsChart />
+					<ButtonArea />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
 					<TerritoryEmissionsChart />

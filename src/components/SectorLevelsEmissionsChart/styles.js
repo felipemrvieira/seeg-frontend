@@ -3,6 +3,7 @@ import cow from '../../assets/img/icon-cow.svg';
 import energy from '../../assets/img/icon-energy.svg';
 import tree from '../../assets/img/icon-tree.svg';
 import trash from '../../assets/img/icon-trash.svg';
+import car from '../../assets/img/icon-transport.svg';
 
 export const Container = styled.div`
 	display: flex;
@@ -20,16 +21,21 @@ export const Container = styled.div`
 
 		h2 {
 			font-weight: 700;
+			text-align: center;
 		}
 		p {
 		}
 	}
 	.chartWrapper {
+		box-shadow: 0px 7px 5px 0px rgb(199 199 199 / 15%);
+		-webkit-box-shadow: 0px 7px 5px 0px rgb(199 199 199 / 15%);
+		-moz-box-shadow: 0px 7px 5px 0px rgba(199, 199, 199, 0.15);
 		padding: 12px 22px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
+		margin-top: 32px;
 		.sector {
 			width: 32%;
 			text-align: center;
@@ -51,7 +57,7 @@ export const Container = styled.div`
 			}
 			.transporte {
 				background-color: #95a5a6;
-				background-image: url(${cow});
+				background-image: url(${car});
 			}
 			.energy {
 				background-color: #c0392b;
