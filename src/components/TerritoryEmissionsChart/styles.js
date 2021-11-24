@@ -10,57 +10,21 @@ export const Container = styled.div`
 	flex: 1;
 	flex-direction: column;
 	width: 100%;
-	background: #ecf0f0;
-	/* min-height: 75vh; */
+	background: #f9f9f9;
 	justify-content: space-between;
 	padding: 40px 22px;
-	background-color: #eff0f0;
-	.sectorsWrapper {
+	.label {
+		font-size: 1em;
+		font-weight: 700;
+	}
+	.switches {
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		.sector {
-			position: relative;
-			padding: 0 8px 120px;
-
-			.header {
-				/* overflow: wrap; */
-				.icon {
-					float: left;
-					margin-right: -60px;
-					/* display: inline-block; */
-					vertical-align: middle;
-					width: 60px;
-					height: 60px;
-					background-size: 60px 60px;
-				}
-				.cow {
-					background-image: url(${cow});
-				}
-				.tree {
-					background-image: url(${tree});
-				}
-				.trash {
-					background-image: url(${trash});
-				}
-				.factory {
-					background-image: url(${factory});
-				}
-				.energy {
-					background-image: url(${energy});
-				}
-				.title {
-					display: inline-block;
-					max-width: 120px;
-					vertical-align: middle;
-					margin-left: 75px;
-					margin-bottom: 0;
-					text-transform: uppercase;
-					font-weight: 300;
-					font-size: 24px;
-					overflow-wrap: break-word;
-				}
-			}
+		flex-direction: row;
+		.boxSwitch {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin-right: 16px;
 		}
 	}
 `;
