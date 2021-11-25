@@ -13,6 +13,8 @@ const CardHeader: React.FC<CardHeaderProps> = ({
 	total_allocated = 'NOT INFORMED',
 	allocatedEmissionInCountry = 'NOT INFORMED',
 	notAllocatedPercentage = 'NOT INFORMED',
+	name = 'Territory',
+	flag = 'flag',
 }) => {
 	const [defaultYear, setDefaultYear] = useState(2019);
 
@@ -24,10 +26,12 @@ const CardHeader: React.FC<CardHeaderProps> = ({
 		<Container>
 			<header>
 				<img
-					src="https://s3-sa-east-1.amazonaws.com/seeg.ecostage.com.br/flags/15.jpg"
+					src={`https://s3-sa-east-1.amazonaws.com/seeg.ecostage.com.br/flags${flag}`}
 					alt="flag"
 				/>
-				<h1>Pará - {year}</h1>
+				<h1>
+					{name} - {year}
+				</h1>
 			</header>
 			<div className="boxes">
 				<div className="mainBoxContainer">

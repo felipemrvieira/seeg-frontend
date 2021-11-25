@@ -23,6 +23,8 @@ const CardPage: React.FC = () => {
 		urban_population: undefined,
 		rank: undefined,
 		total_allocated: undefined,
+		name: undefined,
+		flag_url: undefined,
 	});
 	const [brazilInfo, setBrazilInfo] = useState<BrazilInfoInterface>({
 		total_allocated: undefined,
@@ -48,7 +50,6 @@ const CardPage: React.FC = () => {
 				params,
 			});
 
-			console.log(response.data.territory);
 			const {
 				territory,
 				non_allocated_emission_percentage,
@@ -59,6 +60,8 @@ const CardPage: React.FC = () => {
 			setTerritoryInfo(territory);
 			setBrazilInfoTotalAllocated(brazil_emission_total_allocated);
 			setNotAllocatedPercentage(non_allocated_emission_percentage);
+
+			console.log(territory);
 		} catch (err) {
 			// console.tron.log(err);
 		}
@@ -78,6 +81,8 @@ const CardPage: React.FC = () => {
 			<Nav />
 			<Container>
 				<CardHeader
+					name={territoryInfo?.name}
+					flag={territoryInfo?.flag_url}
 					year={year}
 					area={territoryInfo?.area}
 					total_population={territoryInfo?.total_population}

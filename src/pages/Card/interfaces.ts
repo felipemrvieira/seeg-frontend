@@ -5,6 +5,8 @@ export interface TerritoryInfoInterface {
 	urban_population: number | null | undefined;
 	rank: number | null | undefined;
 	total_allocated: number | null | undefined;
+	name: string | null | undefined;
+	flag_url: string | null | undefined;
 }
 export interface ParamsTypes {
 	slug: string;

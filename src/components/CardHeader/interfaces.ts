@@ -8,4 +8,6 @@ export interface CardHeaderProps {
 	total_allocated?: number | null | undefined;
 	allocatedEmissionInCountry?: number | null | undefined;
 	notAllocatedPercentage?: number | null | undefined;
+	name?: string | null | undefined;
+	flag?: string | null | undefined;
 }
