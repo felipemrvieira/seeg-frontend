@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import MapYearFilter from '../MapYearFilter';
 import { CardHeaderProps } from './interfaces';
 import { Container } from './styles';
+import SearchContext from '../../Contexts';
 
 const CardHeader: React.FC<CardHeaderProps> = ({
-	year = 2020,
 	rank = 'NOT INFORMED',
 	total_population = 'NOT INFORMED',
 	urban_population = 'NOT INFORMED',
@@ -22,6 +22,8 @@ const CardHeader: React.FC<CardHeaderProps> = ({
 		setDefaultYear(updatedValue);
 	}, []);
 
+	const search = useContext(SearchContext);
+
 	return (
 		<Container>
 			<header>
@@ -30,7 +32,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({
 					alt="flag"
 				/>
 				<h1>
-					{name} - {year}
+					{name} - {search.year}
 				</h1>
 			</header>
 			<div className="boxes">
@@ -96,7 +98,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({
 					</p>
 				</div>
 			</div>
-			<MapYearFilter activeYear={year} updateYear={updatDefaultYear} />
+			<MapYearFilter activeYear={search.year} updateYear={updatDefaultYear} />
 		</Container>
 	);
 };

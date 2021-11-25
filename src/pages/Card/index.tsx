@@ -1,5 +1,11 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+	useState,
+	useEffect,
+	useCallback,
+	useMemo,
+	createContext,
+} from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { log } from 'console';
@@ -15,6 +21,7 @@ import {
 } from './interfaces';
 import CardHeader from '../../components/CardHeader';
 import CardTabs from '../../components/CardTabs';
+import { SearchProvider } from '../../Contexts';
 
 const CardPage: React.FC = () => {
 	const [territoryInfo, setTerritoryInfo] = useState<TerritoryInfoInterface>({
@@ -77,13 +84,13 @@ const CardPage: React.FC = () => {
 	}, []);
 
 	return (
-		<>
+		// <>
+		<SearchProvider value={{ slug, year }}>
 			<Nav />
 			<Container>
 				<CardHeader
 					name={territoryInfo?.name}
 					flag={territoryInfo?.flag_url}
-					year={year}
 					area={territoryInfo?.area}
 					total_population={territoryInfo?.total_population}
 					urban_population={territoryInfo?.urban_population}
@@ -92,10 +99,10 @@ const CardPage: React.FC = () => {
 					allocatedEmissionInCountry={brazilInfoTotalAllocated}
 					notAllocatedPercentage={notAllocatedPercentage}
 				/>
-				<CardTabs />
+				<CardTabs year={year} />
 			</Container>
 			<Footer />
-		</>
+		</SearchProvider>
 	);
 };
 

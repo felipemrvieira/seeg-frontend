@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 export interface CardHeaderProps {
-	year: number;
 	area?: number | null | undefined;
 	total_population?: number | null | undefined;
 	urban_population?: number | null | undefined;
