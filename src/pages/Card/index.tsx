@@ -1,21 +1,97 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { log } from 'console';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import { Container } from './styles';
 import api from '../../services/api';
-import { MapInfoInterface } from './interfaces';
+import {
+	ParamsTypes,
+	QueryTypes,
+	TerritoryInfoInterface,
+	BrazilInfoInterface,
+} from './interfaces';
 import CardHeader from '../../components/CardHeader';
 import CardTabs from '../../components/CardTabs';
 
-const CardPage: React.FC = () => (
-	<>
-		<Nav />
-		<Container>
-			<CardHeader />
-			<CardTabs />
-		</Container>
-		<Footer />
-	</>
-);
+const CardPage: React.FC = () => {
+	const [territoryInfo, setTerritoryInfo] = useState<TerritoryInfoInterface>({
+		area: undefined,
+		total_population: undefined,
+		urban_population: undefined,
+		rank: undefined,
+		total_allocated: undefined,
+	});
+	const [brazilInfo, setBrazilInfo] = useState<BrazilInfoInterface>({
+		total_allocated: undefined,
+	});
+	const [brazilInfoTotalAllocated, setBrazilInfoTotalAllocated] = useState(0);
+	const [notAllocatedPercentage, setNotAllocatedPercentage] = useState(0);
+
+	// const [emissionsInfo, setEmissionsInfo] = useState({
+	// });
+
+	const { slug } = useParams<ParamsTypes>();
+	const { search } = useLocation();
+	const memoizedSearch = useMemo(() => new URLSearchParams(search), [search]);
+
+	async function getTerritoryInfo(
+		territorySlug: string,
+		year: number | string | null
+	) {
+		const params = { year };
+
+		try {
+			const response = await api.get(`/territories/${territorySlug}/emission`, {
+				params,
+			});
+
+			console.log(response.data.territory);
+			const {
+				territory,
+				non_allocated_emission_percentage,
+				// brazil_emission,
+				brazil_emission_total_allocated,
+			} = response.data;
+
+			setTerritoryInfo(territory);
+			setBrazilInfoTotalAllocated(brazil_emission_total_allocated);
+			setNotAllocatedPercentage(non_allocated_emission_percentage);
+		} catch (err) {
+			// console.tron.log(err);
+		}
+	}
+
+	// async function getTerritoryEmissionsInfo() {
+
+	// }
+
+	const year = Number(memoizedSearch.get('year'));
+	useEffect(() => {
+		getTerritoryInfo(slug, year);
+	}, []);
+
+	return (
+		<>
+			<Nav />
+			<Container>
+				<CardHeader
+					year={year}
+					area={territoryInfo?.area}
+					total_population={territoryInfo?.total_population}
+					urban_population={territoryInfo?.urban_population}
+					rank={territoryInfo?.rank}
+					total_allocated={territoryInfo?.total_allocated}
+					allocatedEmissionInCountry={brazilInfoTotalAllocated}
+					notAllocatedPercentage={notAllocatedPercentage}
+				/>
+				<CardTabs />
+			</Container>
+			<Footer />
+		</>
+	);
+};
 
 export default CardPage;

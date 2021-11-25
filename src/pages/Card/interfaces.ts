@@ -1,28 +1,18 @@
-export interface EmissionType {
-	name: string;
+/* eslint-disable camelcase */
+export interface TerritoryInfoInterface {
+	area: number | null | undefined;
+	total_population: number | null | undefined;
+	urban_population: number | null | undefined;
+	rank: number | null | undefined;
+	total_allocated: number | null | undefined;
+}
+export interface ParamsTypes {
 	slug: string;
 }
-export interface Gas {
-	id: number;
-	name: string;
-	slug: string;
+export interface QueryTypes {
+	year: number | string;
 }
-export interface Sector {
-	id: number;
-	name: string;
-	slug: string;
-}
-export interface State {
-	id: number;
-	name: string;
-	slug: string;
-}
-export interface MapInfoInterface {
-	activeLevel: number;
-	allSectorsColor: string;
-	defaultEmissionType: string;
-	sectors: Sector[];
-	emissionsTypes: EmissionType[];
-	gases: Gas[];
-	states: State[];
+
+export interface BrazilInfoInterface {
+	total_allocated: number | null | undefined;
 }

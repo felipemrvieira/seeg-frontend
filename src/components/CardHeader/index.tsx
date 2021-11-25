@@ -1,9 +1,19 @@
+/* eslint-disable camelcase */
 import React, { useState, useCallback } from 'react';
 import MapYearFilter from '../MapYearFilter';
-
+import { CardHeaderProps } from './interfaces';
 import { Container } from './styles';
 
-const CardHeader: React.FC = () => {
+const CardHeader: React.FC<CardHeaderProps> = ({
+	year = 2020,
+	rank = 'NOT INFORMED',
+	total_population = 'NOT INFORMED',
+	urban_population = 'NOT INFORMED',
+	area = 'NOT INFORMED',
+	total_allocated = 'NOT INFORMED',
+	allocatedEmissionInCountry = 'NOT INFORMED',
+	notAllocatedPercentage = 'NOT INFORMED',
+}) => {
 	const [defaultYear, setDefaultYear] = useState(2019);
 
 	const updatDefaultYear = useCallback((updatedValue) => {
@@ -17,26 +27,34 @@ const CardHeader: React.FC = () => {
 					src="https://s3-sa-east-1.amazonaws.com/seeg.ecostage.com.br/flags/15.jpg"
 					alt="flag"
 				/>
-				<h1>Pará - 2020</h1>
+				<h1>Pará - {year}</h1>
 			</header>
 			<div className="boxes">
 				<div className="mainBoxContainer">
 					<div className="mainBox">
 						<div className="info">
 							<span>AREA (KM2):</span>
-							<p>NOT INFORMED</p>
+							<p>{area?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
 						</div>
 						<div className="info">
 							<span>TOTAL POPULATION:</span>
-							<p>NOT INFORMED</p>
+							<p>
+								{total_population
+									?.toString()
+									.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+							</p>
 						</div>
 						<div className="info">
 							<span>URBAN POPULATION:</span>
-							<p>NOT INFORMED</p>
+							<p>
+								{urban_population
+									?.toString()
+									.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+							</p>
 						</div>
 						<div className="info">
 							<span>RANKING:</span>
-							<p>NOT INFORMED</p>
+							<p>{rank}</p>
 						</div>
 					</div>
 				</div>
@@ -46,19 +64,26 @@ const CardHeader: React.FC = () => {
 							<span className="label">
 								GROSS EMISSIONS ALLOCATED IN THE STATE
 							</span>
-							<span className="value">0</span>
+							<span className="value">
+								{Math.round(Number(total_allocated))
+									?.toString()
+									.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+							</span>
 						</div>
 						<div className="subBox">
-							<span className="label">
-								GROSS EMISSIONS ALLOCATED IN THE STATE
+							<span className="label">GROSS EMISSIONS IN THE COUNTRY</span>
+							<span className="value">
+								{' '}
+								{Math.round(Number(allocatedEmissionInCountry))
+									?.toString()
+									.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 							</span>
-							<span className="value">0</span>
 						</div>
 						<div className="subBox">
-							<span className="label">
-								GROSS EMISSIONS ALLOCATED IN THE STATE
+							<span className="label">EMISSIONS NOT ALLOCATED IN A STATE</span>
+							<span className="value">
+								{Number(notAllocatedPercentage).toFixed(2)}%
 							</span>
-							<span className="value">0</span>
 						</div>
 					</div>
 					<p>
@@ -67,7 +92,7 @@ const CardHeader: React.FC = () => {
 					</p>
 				</div>
 			</div>
-			<MapYearFilter activeYear={defaultYear} updateYear={updatDefaultYear} />
+			<MapYearFilter activeYear={year} updateYear={updatDefaultYear} />
 		</Container>
 	);
 };

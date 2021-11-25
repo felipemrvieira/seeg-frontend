@@ -374,7 +374,9 @@ const Map: React.FC<MapInfo> = ({
 							<HighchartsReact highcharts={Highcharts} options={chartInfo} />
 						</div>
 						<div className="popUpButton">
-							<Link to="/card">View territory details</Link>
+							<Link to={`/territories/${popUpInfo.slug}?year=${activeYear}`}>
+								View territory details
+							</Link>
 						</div>
 					</Popup>
 				)}

@@ -18,7 +18,8 @@ export default function Routes() {
 		<Switch>
 			<Route path="/" exact component={MapPage} />
 			<Route path="/map" exact component={MapPage} />
-			<Route path="/card" exact component={CardPage} />
+			<Route path="/card" component={CardPage} />
+			<Route path="/territories/:slug" component={CardPage} />
 			{/* <Route path="/user/register" component={UserRegister} isPrivate /> */}
 		</Switch>
 	);
