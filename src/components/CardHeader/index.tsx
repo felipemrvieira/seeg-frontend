@@ -16,7 +16,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({
 	name = 'Territory',
 	flag = 'flag',
 }) => {
-	const [defaultYear, setDefaultYear] = useState(2019);
+	const [, setDefaultYear] = useState(2019);
 
 	const updatDefaultYear = useCallback((updatedValue) => {
 		setDefaultYear(updatedValue);

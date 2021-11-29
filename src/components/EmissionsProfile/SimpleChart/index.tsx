@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { formatEmissionNumber } from '../../../utils';
@@ -18,7 +18,7 @@ const SimpleChart: React.FC<SimpleChartProps> = ({
 		Math.round(Number(formatEmissionNumber(removals).toString().split(',')[0]))
 	);
 
-	const [chartInfo, setChartInfo] = useState({
+	const [chartInfo] = useState({
 		chart: {
 			type: 'bar',
 			width: 580,

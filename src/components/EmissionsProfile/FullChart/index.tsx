@@ -1,18 +1,11 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { formatEmissionNumber } from '../../../utils';
 import { FullChartProps } from './interfaces';
 
-const FullChart: React.FC<FullChartProps> = ({ total_allocated }) => {
-	const totalBruto = Math.abs(
-		Math.round(
-			Number(formatEmissionNumber(total_allocated).toString().split(',')[0])
-		)
-	);
-
-	const [chartInfo, setChartInfo] = useState({
+const FullChart: React.FC<FullChartProps> = () => {
+	const [chartInfo] = useState({
 		chart: {
 			type: 'column',
 			height: 360,
@@ -58,7 +51,7 @@ const FullChart: React.FC<FullChartProps> = ({ total_allocated }) => {
 		],
 		tooltip: {
 			pointFormat: `{series.name}: <b>{point.y:,.0f}</b> ${
-				true ? 'MIL ' : 'M '
+				'MIL '
 				// isCities ? 'MIL ' : 'M '
 			}tCO2e`,
 		},
