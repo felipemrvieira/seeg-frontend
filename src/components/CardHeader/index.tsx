@@ -27,10 +27,12 @@ const CardHeader: React.FC<CardHeaderProps> = ({
 	return (
 		<Container>
 			<header>
-				<img
-					src={`https://s3-sa-east-1.amazonaws.com/seeg.ecostage.com.br/flags${flag}`}
-					alt="flag"
-				/>
+				{flag !== 'flag' && (
+					<img
+						src={`https://s3-sa-east-1.amazonaws.com/seeg.ecostage.com.br/flags${flag}`}
+						alt="flag"
+					/>
+				)}
 				<h1>
 					{name} - {search.year}
 				</h1>

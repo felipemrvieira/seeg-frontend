@@ -5,11 +5,17 @@ import HighchartsReact from 'highcharts-react-official';
 import { formatEmissionNumber } from '../../../utils';
 import { SimpleChartProps } from './interfaces';
 
-const SimpleChart: React.FC<SimpleChartProps> = ({ total_allocated }) => {
+const SimpleChart: React.FC<SimpleChartProps> = ({
+	total_allocated,
+	removals,
+}) => {
 	const totalBruto = Math.abs(
 		Math.round(
 			Number(formatEmissionNumber(total_allocated).toString().split(',')[0])
 		)
+	);
+	const totalRemovals = Math.abs(
+		Math.round(Number(formatEmissionNumber(removals).toString().split(',')[0]))
 	);
 
 	const [chartInfo, setChartInfo] = useState({
@@ -88,7 +94,7 @@ const SimpleChart: React.FC<SimpleChartProps> = ({ total_allocated }) => {
 		series: [
 			{
 				name: 'name',
-				data: [totalBruto, 400],
+				data: [totalBruto, totalRemovals],
 				// name: this.props.serieName,
 				// data: _.values(this.props.data),
 			},

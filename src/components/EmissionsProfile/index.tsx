@@ -17,6 +17,8 @@ const EmissionsProfile: React.FC<EmissionsProfileProps> = ({
 	total_allocated,
 }) => {
 	const [defaultYear, setDefaultYear] = useState(2019);
+	const [removals, setRemovals] = useState(0);
+	const [netEmissions, setNetEmissions] = useState(0);
 
 	const searchContext = useContext(SearchContext);
 	const { gasUsed, isCity, year, territory } = searchContext;
@@ -34,47 +36,29 @@ const EmissionsProfile: React.FC<EmissionsProfileProps> = ({
 			console.log(params);
 
 			try {
-				const response = await axios.get(
-					`localhost:3000/total_emission/emission`,
-					{ params }
+				const response = await api.get(`/total_emission/emission`, { params });
+
+				// console.log(response.data);
+
+				const series = response.data;
+
+				const territoryRemovals = series.reduce(
+					(acc: any, curr: any) =>
+						acc +
+						curr.data.reduce((acc2: any, curr2: any) => acc2 + curr2.y, 0),
+					0
 				);
 
-				console.log(response.data);
+				setRemovals(territoryRemovals);
+				const operator = isCity ? 1000 : 1000000;
+				const stateEmissionsLiquid =
+					total_allocated - Math.abs(territoryRemovals / operator);
+				setNetEmissions(stateEmissionsLiquid);
 			} catch (err) {
-				// console.tron.log(err);
+				console.log(err);
 			}
 		}
 	}
-
-	// loadStateEmissionsRemovals() {
-	//   const params = {
-	//     gas: this.props.gasUsed.id,
-	//     social_economic: "",
-	//     territories: [this.props.territory.id],
-	//     emission_type: "Remoção",
-	//     year: [this.props.year, this.props.year],
-	//   };
-
-	//   $.getJSON(Routes.emission_total_emission_path(), params).then((series) => {
-	//     const stateEmissionsRemovals = _.reduce(
-	//       series,
-	//       (mem, item) => {
-	//         return mem + _.reduce(item.data, (acc, e) => (acc += e.y), 0);
-	//       },
-	//       0
-	//     );
-
-	//     const operator = IS_CITIES ? 1000 : 1000000;
-	//     const stateEmissionsLiquid =
-	//       this.state.allocatedEmissionInState -
-	//       Math.abs(stateEmissionsRemovals / operator);
-
-	//     this.setState({
-	//       stateEmissionsRemovals,
-	//       stateEmissionsLiquid,
-	//     });
-	//   });
-	// }
 
 	useEffect(() => {
 		loadStateRemovals();
@@ -91,8 +75,11 @@ const EmissionsProfile: React.FC<EmissionsProfileProps> = ({
 						</h2>
 					</div>
 					<div className="emissions">
-						{total_allocated > 0 && (
-							<SimpleChart total_allocated={total_allocated} />
+						{total_allocated > 0 && removals > 0 && (
+							<SimpleChart
+								total_allocated={total_allocated}
+								removals={removals}
+							/>
 						)}
 						<div className="emissionsPercentages">
 							<div className="state">PA</div>
