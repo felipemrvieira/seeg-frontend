@@ -18,3 +18,9 @@ export interface QueryTypes {
 export interface BrazilInfoInterface {
 	total_allocated: number | null | undefined;
 }
+
+export interface GasInterface {
+	name: string;
+	id: string;
+	slug: string;
+}

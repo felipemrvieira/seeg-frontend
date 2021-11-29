@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { any } from 'prop-types';
 import axios from 'axios';
 import D3Map from '../D3Map';
 import api from '../../services/api';
+import SearchContext from '../../Contexts';
 
 import { Container } from './styles';
 
@@ -172,32 +173,63 @@ const EmissionsProfile: React.FC = () => {
 		],
 	});
 
-	// async function loadData() {
-	// 	const params = {
-	// 		economic_activities: [],
-	// 		gas: 6,
-	// 		sector: undefined,
-	// 		social_economic: '',
-	// 		territories: [26],
-	// 		emission_type: 'CO2',
-	// 		year: isCities ? [2000, 2018] : [1990, defaultYear],
-	// 	};
+	const searchContext = useContext(SearchContext);
 
-	// 	try {
-	// 		const response = await axios.get(
-	// 			`localhost:3000/total_emission/emission`,
-	// 			{ params }
-	// 		);
+	console.log(searchContext.gasUsed);
+	async function loadStateRemovals() {
+		const params = {
+			// gas: search.gasUsed.id,
+			// social_economic: '',
+			// territories: [this.props.territory.id],
+			// emission_type: 'Remoção',
+			// year: [this.props.year, this.props.year],
+		};
 
-	// 		console.log(response.data);
-	// 	} catch (err) {
-	// 		// console.tron.log(err);
-	// 	}
+		try {
+			const response = await axios.get(
+				`localhost:3000/total_emission/emission`,
+				{ params }
+			);
+
+			console.log(response.data);
+		} catch (err) {
+			// console.tron.log(err);
+		}
+	}
+
+	// loadStateEmissionsRemovals() {
+	//   const params = {
+	//     gas: this.props.gasUsed.id,
+	//     social_economic: "",
+	//     territories: [this.props.territory.id],
+	//     emission_type: "Remoção",
+	//     year: [this.props.year, this.props.year],
+	//   };
+
+	//   $.getJSON(Routes.emission_total_emission_path(), params).then((series) => {
+	//     const stateEmissionsRemovals = _.reduce(
+	//       series,
+	//       (mem, item) => {
+	//         return mem + _.reduce(item.data, (acc, e) => (acc += e.y), 0);
+	//       },
+	//       0
+	//     );
+
+	//     const operator = IS_CITIES ? 1000 : 1000000;
+	//     const stateEmissionsLiquid =
+	//       this.state.allocatedEmissionInState -
+	//       Math.abs(stateEmissionsRemovals / operator);
+
+	//     this.setState({
+	//       stateEmissionsRemovals,
+	//       stateEmissionsLiquid,
+	//     });
+	//   });
 	// }
 
-	// useEffect(() => {
-	// 	loadData();
-	// }, []);
+	useEffect(() => {
+		loadStateRemovals();
+	}, []);
 
 	return (
 		<Container>
@@ -206,7 +238,7 @@ const EmissionsProfile: React.FC = () => {
 					<div className="header">
 						<h2>
 							Estimativa de Emissões de Gases de Efeito Estufa no Brasil em{' '}
-							<span>2019</span>
+							<span>{searchContext.year}</span>
 						</h2>
 					</div>
 					<div className="emissions">

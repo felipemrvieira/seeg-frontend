@@ -1,14 +1,6 @@
 /* eslint-disable camelcase */
-import React, {
-	useState,
-	useEffect,
-	useCallback,
-	useMemo,
-	createContext,
-} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { log } from 'console';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import { Container } from './styles';
@@ -18,6 +10,7 @@ import {
 	QueryTypes,
 	TerritoryInfoInterface,
 	BrazilInfoInterface,
+	GasInterface,
 } from './interfaces';
 import CardHeader from '../../components/CardHeader';
 import CardTabs from '../../components/CardTabs';
@@ -38,6 +31,7 @@ const CardPage: React.FC = () => {
 	});
 	const [brazilInfoTotalAllocated, setBrazilInfoTotalAllocated] = useState(0);
 	const [notAllocatedPercentage, setNotAllocatedPercentage] = useState(0);
+	const [gas, setGas] = useState<GasInterface>({ id: '', name: '', slug: '' });
 
 	// const [emissionsInfo, setEmissionsInfo] = useState({
 	// });
@@ -62,11 +56,13 @@ const CardPage: React.FC = () => {
 				non_allocated_emission_percentage,
 				// brazil_emission,
 				brazil_emission_total_allocated,
+				gasUsed,
 			} = response.data;
 
 			setTerritoryInfo(territory);
 			setBrazilInfoTotalAllocated(brazil_emission_total_allocated);
 			setNotAllocatedPercentage(non_allocated_emission_percentage);
+			setGas(gasUsed);
 
 			console.log(territory);
 		} catch (err) {
@@ -84,8 +80,7 @@ const CardPage: React.FC = () => {
 	}, []);
 
 	return (
-		// <>
-		<SearchProvider value={{ slug, year }}>
+		<SearchProvider value={{ slug, year, gasUsed: gas }}>
 			<Nav />
 			<Container>
 				<CardHeader
@@ -99,7 +94,7 @@ const CardPage: React.FC = () => {
 					allocatedEmissionInCountry={brazilInfoTotalAllocated}
 					notAllocatedPercentage={notAllocatedPercentage}
 				/>
-				<CardTabs year={year} />
+				<CardTabs />
 			</Container>
 			<Footer />
 		</SearchProvider>
