@@ -22,3 +22,7 @@ export function formatNumber(number, separator, decimal_separator, decimals) {
 	}
 	return x1 + x2;
 }
+
+export function formatEmissionNumber(number) {
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

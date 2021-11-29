@@ -13,7 +13,7 @@ import SectorLevelsEmissionsChart from '../SectorLevelsEmissionsChart';
 import TerritoryEmissionsChart from '../TerritoryEmissionsChart';
 import TerritoryEmissionsTable from '../TerritoryEmissionsTable';
 import ButtonArea from '../ButtonArea';
-// import { CardTabsProps } from './interfaces';
+import { CardTabsProps } from './interfaces';
 
 interface TabPanelProps {
 	children: React.ReactNode;
@@ -37,7 +37,7 @@ function TabPanel(props: TabPanelProps) {
 	);
 }
 
-const CardTabs: React.FC = () => {
+const CardTabs: React.FC<CardTabsProps> = ({ total_allocated = 0 }) => {
 	const [value, setValue] = useState(0);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -67,7 +67,7 @@ const CardTabs: React.FC = () => {
 					</AntTabs>
 				</Box>
 				<TabPanel value={value} index={0}>
-					<EmissionsProfile />
+					<EmissionsProfile total_allocated={total_allocated} />
 					<SectorCharts />
 					<StateAndCountryEmissions />
 					<TerritoryEconomicActivities />

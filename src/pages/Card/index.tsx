@@ -25,13 +25,15 @@ const CardPage: React.FC = () => {
 		total_allocated: undefined,
 		name: undefined,
 		flag_url: undefined,
+		id: 0,
+		slug: '',
 	});
 	const [brazilInfo, setBrazilInfo] = useState<BrazilInfoInterface>({
 		total_allocated: undefined,
 	});
 	const [brazilInfoTotalAllocated, setBrazilInfoTotalAllocated] = useState(0);
 	const [notAllocatedPercentage, setNotAllocatedPercentage] = useState(0);
-	const [gas, setGas] = useState<GasInterface>({ id: '', name: '', slug: '' });
+	const [gas, setGas] = useState<GasInterface>({ id: 0, name: '', slug: '' });
 
 	// const [emissionsInfo, setEmissionsInfo] = useState({
 	// });
@@ -80,7 +82,15 @@ const CardPage: React.FC = () => {
 	}, []);
 
 	return (
-		<SearchProvider value={{ slug, year, gasUsed: gas }}>
+		<SearchProvider
+			value={{
+				slug,
+				year,
+				gasUsed: gas,
+				isCity: false,
+				territory: { id: territoryInfo.id, slug: territoryInfo.slug },
+			}}
+		>
 			<Nav />
 			<Container>
 				<CardHeader
@@ -94,7 +104,7 @@ const CardPage: React.FC = () => {
 					allocatedEmissionInCountry={brazilInfoTotalAllocated}
 					notAllocatedPercentage={notAllocatedPercentage}
 				/>
-				<CardTabs />
+				<CardTabs total_allocated={territoryInfo.total_allocated || 0} />
 			</Container>
 			<Footer />
 		</SearchProvider>

@@ -1,199 +1,48 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect, useContext } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { any } from 'prop-types';
 import axios from 'axios';
 import D3Map from '../D3Map';
 import api from '../../services/api';
 import SearchContext from '../../Contexts';
+import { formatEmissionNumber } from '../../utils';
 
 import { Container } from './styles';
+import { EmissionsProfileProps } from './interfaces';
+import SimpleChart from './SimpleChart';
+import FullChart from './FullChart';
 
-const EmissionsProfile: React.FC = () => {
+const EmissionsProfile: React.FC<EmissionsProfileProps> = ({
+	total_allocated,
+}) => {
 	const [defaultYear, setDefaultYear] = useState(2019);
-	const [isCities, setIsCities] = useState(false);
-
-	const [chartInfo2, setChartInfo2] = useState({
-		chart: {
-			type: 'column',
-			height: 360,
-			backgroundColor: 'none',
-		},
-		title: {
-			text: null,
-		},
-		xAxis: {
-			type: 'category',
-			labels: {
-				style: {
-					color: '#FFF',
-				},
-			},
-			lineColor: '#444',
-			gridLineColor: '#444',
-			tickColor: '#444',
-		},
-		yAxis: {
-			title: {
-				text: null,
-			},
-			labels: {
-				style: {
-					color: '#444',
-				},
-			},
-			lineColor: '#444',
-			gridLineColor: '#444',
-			tickColor: '#444',
-		},
-		series: [
-			{
-				name: 'Emissões',
-				// data: this.state.seriesData,
-				data: [
-					49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
-					95.6, 54.4, 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5,
-					216.4, 194.1, 95.6, 54.4,
-				],
-			},
-		],
-		tooltip: {
-			pointFormat: `{series.name}: <b>{point.y:,.0f}</b> ${
-				isCities ? 'MIL ' : 'M '
-			}tCO2e`,
-		},
-		legend: {
-			enabled: false,
-		},
-		plotOptions: {
-			series: {
-				borderWidth: 0,
-				dataLabels: {
-					enabled: true,
-					format: '{point.y:,.0f}',
-					shape: 'callout',
-					backgroundColor: 'rgba(51, 51, 51, 0.85)',
-					style: {
-						color: '#FFFFFF',
-						fontSize: '10px',
-						textOutline: 'none',
-					},
-				},
-				color: '#FFFFFF',
-			},
-		},
-		credits: {
-			enabled: false,
-		},
-		exporting: {
-			enabled: false,
-		},
-	});
-
-	const [chartInfo, setChartInfo] = useState({
-		chart: {
-			type: 'bar',
-			width: 580,
-			height: 85,
-			backgroundColor: 'none',
-		},
-		title: {
-			text: null,
-		},
-		xAxis: {
-			// categories: _.keys(this.props.data),
-			categories: ['Total bruto', 'Remoções'],
-			lineWidth: 0,
-			minorGridLineWidth: 0,
-			lineColor: 'transparent',
-			minorTickLength: 0,
-			tickLength: 0,
-			labels: {
-				style: {
-					color: '#4E4F51',
-					fontWeight: '700',
-					fontStyle: 'italic',
-					fontSize: '16px',
-					// fontSize: APP.isMobile ? '12px' : '16px',
-					fontFamily: '"Lato", sans-serif',
-				},
-			},
-		},
-		yAxis: {
-			gridLineWidth: 0,
-			minorGridLineWidth: 0,
-			visible: false,
-			title: {
-				text: null,
-			},
-			labels: {
-				enabled: false,
-			},
-		},
-		tooltip: {
-			valueDecimals: 0,
-			// valueSuffix: ` ${this.props.suffix}`,
-		},
-		plotOptions: {
-			bar: {
-				dataLabels: {
-					enabled: true,
-					// format: `{point.y:,.0f} ${this.props.suffix}`,
-					align: 'right',
-					style: {
-						color: '#4E4F51',
-						fontWeight: '700',
-						fontStyle: 'italic',
-						fontSize: '14px',
-						// fontSize: APP.isMobile ? '12px' : '14px',
-						fontFamily: '"Lato", sans-serif',
-					},
-				},
-			},
-			series: {
-				color: '#FFF',
-			},
-		},
-		legend: {
-			enabled: false,
-		},
-		credits: {
-			enabled: false,
-		},
-		exporting: {
-			enabled: false,
-		},
-		series: [
-			{
-				name: 'name',
-				data: [1, 2],
-				// name: this.props.serieName,
-				// data: _.values(this.props.data),
-			},
-		],
-	});
 
 	const searchContext = useContext(SearchContext);
+	const { gasUsed, isCity, year, territory } = searchContext;
 
-	console.log(searchContext.gasUsed);
 	async function loadStateRemovals() {
-		const params = {
-			// gas: search.gasUsed.id,
-			// social_economic: '',
-			// territories: [this.props.territory.id],
-			// emission_type: 'Remoção',
-			// year: [this.props.year, this.props.year],
-		};
+		if (territory.id !== 0 && gasUsed.id !== 0) {
+			const params = {
+				gas: gasUsed.id,
+				social_economic: '',
+				territories: [territory.id],
+				emission_type: 'Remoção',
+				year: [year, year],
+			};
 
-		try {
-			const response = await axios.get(
-				`localhost:3000/total_emission/emission`,
-				{ params }
-			);
+			console.log(params);
 
-			console.log(response.data);
-		} catch (err) {
-			// console.tron.log(err);
+			try {
+				const response = await axios.get(
+					`localhost:3000/total_emission/emission`,
+					{ params }
+				);
+
+				console.log(response.data);
+			} catch (err) {
+				// console.tron.log(err);
+			}
 		}
 	}
 
@@ -229,7 +78,7 @@ const EmissionsProfile: React.FC = () => {
 
 	useEffect(() => {
 		loadStateRemovals();
-	}, []);
+	}, [territory]);
 
 	return (
 		<Container>
@@ -238,11 +87,13 @@ const EmissionsProfile: React.FC = () => {
 					<div className="header">
 						<h2>
 							Estimativa de Emissões de Gases de Efeito Estufa no Brasil em{' '}
-							<span>{searchContext.year}</span>
+							<span>{year}</span>
 						</h2>
 					</div>
 					<div className="emissions">
-						<HighchartsReact highcharts={Highcharts} options={chartInfo} />
+						{total_allocated > 0 && (
+							<SimpleChart total_allocated={total_allocated} />
+						)}
 						<div className="emissionsPercentages">
 							<div className="state">PA</div>
 							<div className="info">
@@ -289,13 +140,12 @@ const EmissionsProfile: React.FC = () => {
 			</div>
 			<div className="mainChart">
 				<p>
-					Emissões totais alocadas {!isCities ? 'no estado' : 'no município'} de{' '}
-					{!isCities ? '1990' : '2000'} A {defaultYear} (
-					{isCities ? 'Mil ' : 'M'}
+					Emissões totais alocadas {!isCity ? 'no estado' : 'no município'} de{' '}
+					{!isCity ? '1990' : '2000'} A {defaultYear} ({isCity ? 'Mil ' : 'M'}
 					<span className="lowercase">t</span>CO<sub>2</sub>
 					<span className="lowercase">e</span>)
 				</p>
-				<HighchartsReact highcharts={Highcharts} options={chartInfo2} />
+				{true && <FullChart total_allocated={total_allocated} />}
 			</div>
 		</Container>
 	);

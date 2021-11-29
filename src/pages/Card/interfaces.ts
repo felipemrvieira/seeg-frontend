@@ -7,6 +7,8 @@ export interface TerritoryInfoInterface {
 	total_allocated: number | null | undefined;
 	name: string | null | undefined;
 	flag_url: string | null | undefined;
+	id: number;
+	slug: string;
 }
 export interface ParamsTypes {
 	slug: string;
@@ -21,6 +23,6 @@ export interface BrazilInfoInterface {
 
 export interface GasInterface {
 	name: string;
-	id: string;
+	id: number;
 	slug: string;
 }

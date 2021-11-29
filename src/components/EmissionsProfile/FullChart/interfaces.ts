@@ -1,4 +1,4 @@
 /* eslint-disable camelcase */
-export interface CardTabsProps {
+export interface FullChartProps {
 	total_allocated: number;
 }

@@ -3,9 +3,14 @@ import React from 'react';
 const SearchContext = React.createContext({
 	slug: '',
 	year: 2020,
+	isCity: false,
 	gasUsed: {
-		id: '',
+		id: 0,
 		name: '',
+		slug: '',
+	},
+	territory: {
+		id: 0,
 		slug: '',
 	},
 });
