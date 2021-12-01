@@ -32,6 +32,7 @@ const CardPage: React.FC = () => {
 		total_allocated: undefined,
 	});
 	const [defaultTerritory, setDefaultTerritory] = useState(0);
+	const [defaultEmission, setDefaultEmission] = useState('');
 	const [brazilInfoTotalAllocated, setBrazilInfoTotalAllocated] = useState(0);
 	const [notAllocatedPercentage, setNotAllocatedPercentage] = useState(0);
 	const [gas, setGas] = useState<GasInterface>({ id: 0, name: '', slug: '' });
@@ -58,6 +59,7 @@ const CardPage: React.FC = () => {
 				brazil_emission_total_allocated,
 				gasUsed,
 				defaultTerritoryId,
+				defaultEmissionType,
 			} = response.data;
 
 			setTerritoryInfo(territory);
@@ -65,8 +67,9 @@ const CardPage: React.FC = () => {
 			setNotAllocatedPercentage(non_allocated_emission_percentage);
 			setGas(gasUsed);
 			setDefaultTerritory(defaultTerritoryId);
+			setDefaultEmission(defaultEmissionType);
 
-			console.log(response.data);
+			// console.log(response.data);
 		} catch (err) {
 			// console.tron.log(err);
 		}
@@ -94,6 +97,7 @@ const CardPage: React.FC = () => {
 				defaultTerritory,
 				area: territoryInfo.area,
 				totalPopulation: territoryInfo.total_population,
+				defaultEmissionType: defaultEmission,
 			}}
 		>
 			<Nav />

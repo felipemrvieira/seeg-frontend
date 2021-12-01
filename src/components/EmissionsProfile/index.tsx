@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect, useContext } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+
 import axios from 'axios';
 import D3Map from '../D3Map';
 import api from '../../services/api';
@@ -9,7 +8,7 @@ import SearchContext from '../../Contexts';
 import { formatEmissionNumber, formatNumber, strToNumber } from '../../utils';
 
 import { Container } from './styles';
-import { EmissionsProfileProps } from './interfaces';
+import { EmissionsProfileProps, iData, iEntry } from './interfaces';
 import SimpleChart from './SimpleChart';
 import FullChart from './FullChart';
 
@@ -19,6 +18,41 @@ const EmissionsProfile: React.FC = () => {
 	const [territoryNetEmissions, setTerritoryNetEmissions] = useState(0);
 	const [brasilRemovals, setBrasilRemovals] = useState(0);
 	const [brasilNetEmissions, setBrasilNetEmissions] = useState(0);
+
+	const initialData: any = {
+		1990: 0,
+		1991: 0,
+		1992: 0,
+		1993: 0,
+		1994: 0,
+		1995: 0,
+		1996: 0,
+		1997: 0,
+		1998: 0,
+		1999: 0,
+		2000: 0,
+		2001: 0,
+		2002: 0,
+		2003: 0,
+		2004: 0,
+		2005: 0,
+		2006: 0,
+		2007: 0,
+		2008: 0,
+		2009: 0,
+		2010: 0,
+		2011: 0,
+		2012: 0,
+		2013: 0,
+		2014: 0,
+		2015: 0,
+		2016: 0,
+		2017: 0,
+		2018: 0,
+		2019: 0,
+	};
+	const [parsedSerie, setParsedSerie] = useState(initialData);
+	const [parsedData, setParsedData] = useState({});
 
 	const searchContext = useContext(SearchContext);
 	const {
@@ -31,6 +65,7 @@ const EmissionsProfile: React.FC = () => {
 		defaultTerritory,
 		area,
 		totalPopulation,
+		defaultEmissionType,
 	} = searchContext;
 
 	const brazilArea = 8516000;
@@ -63,8 +98,69 @@ const EmissionsProfile: React.FC = () => {
 					totalAllocated - Math.abs(removals / operator);
 				setTerritoryNetEmissions(stateEmissionsLiquid);
 			} catch (err) {
-				console.log(err);
+				// console.log(err);
 			}
+		}
+	}
+
+	async function loadData() {
+		if (
+			territory.id !== 0 &&
+			gasUsed.id !== 0 &&
+			year !== 0 &&
+			defaultEmissionType !== ''
+		) {
+			const params = {
+				economic_activities: [],
+				gas: gasUsed.id,
+				sector: undefined,
+				social_economic: '',
+				territories: [territory.id],
+				emission_type: defaultEmissionType,
+				year: isCity ? [2000, 2018] : [1990, year],
+			};
+
+			try {
+				const response = await api.get(`total_emission/emission`, {
+					params,
+				});
+
+				const series = response.data;
+				setParsedSerie(initialData);
+
+				series.forEach((serie: iData) => {
+					serie.data.forEach((entry: iEntry) => {
+						if (parsedSerie[entry.name as keyof typeof parsedSerie]) {
+							setParsedSerie({
+								...parsedSerie,
+								[entry.name]: (parsedSerie[
+									entry.name as keyof typeof parsedSerie
+								] += entry.y),
+							});
+						} else {
+							setParsedSerie({
+								...parsedSerie,
+								[entry.name]: (parsedSerie[
+									entry.name as keyof typeof parsedSerie
+								] = entry.y),
+							});
+						}
+					});
+				});
+
+				console.log(parsedSerie);
+			} catch (err) {
+				// console.tron.log(err);
+			}
+
+			const keys = Object.keys(initialData);
+			const seriesData = keys.map((key: string) => ({
+				name: key,
+				y: parsedSerie[key] / (isCity ? 1000 : 1000000),
+			}));
+
+			setParsedData(seriesData);
+			console.log(seriesData);
 		}
 	}
 
@@ -81,8 +177,8 @@ const EmissionsProfile: React.FC = () => {
 			try {
 				const response = await api.get(`/total_emission/emission`, { params });
 				const series = response.data;
-				console.log(params);
-				console.log(series.data);
+				// console.log(params);
+				// console.log(series.data);
 
 				const removals = series.reduce(
 					(acc: any, curr: any) =>
@@ -96,7 +192,7 @@ const EmissionsProfile: React.FC = () => {
 				setBrasilRemovals(removals);
 				setBrasilNetEmissions(brazilEmissionsLiquid);
 			} catch (err) {
-				console.log(err);
+				// console.log(err);
 			}
 		}
 	}
@@ -104,6 +200,7 @@ const EmissionsProfile: React.FC = () => {
 	useEffect(() => {
 		loadTerritoryRemovals();
 		loadBrazilRemovals();
+		loadData();
 	}, [territory]);
 
 	function parseStatePercentageData(
@@ -195,7 +292,6 @@ const EmissionsProfile: React.FC = () => {
 	}
 
 	function renderPercentages() {
-		console.log(stateAreaValues());
 		const dataProps = [
 			{
 				values: allocatedEmissionValues(),
@@ -279,7 +375,10 @@ const EmissionsProfile: React.FC = () => {
 					<span className="lowercase">t</span>CO<sub>2</sub>
 					<span className="lowercase">e</span>)
 				</p>
-				{true && <FullChart totalAllocated={totalAllocated} />}
+				{Object.keys(parsedData).length > 0 && (
+					<FullChart data={parsedData} />
+					// <div>{JSON.stringify(parsedData)}</div>
+				)}
 			</div>
 		</Container>
 	);

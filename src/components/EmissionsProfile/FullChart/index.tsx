@@ -1,10 +1,27 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { FullChartProps } from './interfaces';
+import { FullChartProps, iData, iEntry } from './interfaces';
+import api from '../../../services/api';
+import SearchContext from '../../../Contexts';
 
-const FullChart: React.FC<FullChartProps> = () => {
+const FullChart: React.FC<FullChartProps> = (data) => {
+	const searchContext = useContext(SearchContext);
+	const {
+		gasUsed,
+		isCity,
+		year,
+		territory,
+		totalAllocated,
+		allocatedEmissionInCountry,
+		defaultTerritory,
+		area,
+		totalPopulation,
+		defaultEmissionType,
+	} = searchContext;
+
 	const [chartInfo] = useState({
 		chart: {
 			type: 'column',
@@ -41,18 +58,18 @@ const FullChart: React.FC<FullChartProps> = () => {
 		series: [
 			{
 				name: 'Emissões',
-				// data: this.state.seriesData,
-				data: [
-					49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
-					95.6, 54.4, 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5,
-					216.4, 194.1, 95.6, 54.4,
-				],
+				data: data.data,
+				// data: [
+				// 	49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
+				// 	95.6, 54.4, 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5,
+				// 	216.4, 194.1, 95.6, 54.4,
+				// ],
 			},
 		],
 		tooltip: {
 			pointFormat: `{series.name}: <b>{point.y:,.0f}</b> ${
-				'MIL '
-				// isCities ? 'MIL ' : 'M '
+				// 'MIL '
+				isCity ? 'MIL ' : 'M '
 			}tCO2e`,
 		},
 		legend: {
@@ -83,6 +100,15 @@ const FullChart: React.FC<FullChartProps> = () => {
 		},
 	});
 
+	useEffect(() => {
+		// loadData();
+	}, [territory]);
+
+	console.log(data);
 	return <HighchartsReact highcharts={Highcharts} options={chartInfo} />;
+	// const { data } = parsedData;
+
+	// eslint-disable-next-line react/destructuring-assignment
+	// return <div>{JSON.stringify(data.data)}</div>;
 };
 export default FullChart;

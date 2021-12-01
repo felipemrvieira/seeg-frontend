@@ -18,6 +18,7 @@ const SearchContext = React.createContext({
 	defaultTerritory: 0,
 	area: 0,
 	totalPopulation: 0,
+	defaultEmissionType: '',
 });
 export const SearchProvider = SearchContext.Provider;
 
