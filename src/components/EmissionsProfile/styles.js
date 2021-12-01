@@ -90,7 +90,7 @@ export const Container = styled.div`
 									font-size: 14px;
 								}
 								span + span {
-									margin-left: 10px;
+									margin-left: 5px;
 								}
 								.strong {
 									font-weight: 700;

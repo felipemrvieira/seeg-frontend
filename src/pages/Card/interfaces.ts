@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 export interface TerritoryInfoInterface {
-	area: number | null | undefined;
-	total_population: number | null | undefined;
-	urban_population: number | null | undefined;
+	area: number;
+	total_population: number;
+	urban_population: number;
 	rank: number | null | undefined;
-	total_allocated: number | null | undefined;
+	total_allocated: number;
 	name: string | null | undefined;
 	flag_url: string | null | undefined;
 	id: number;

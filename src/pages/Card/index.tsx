@@ -18,11 +18,11 @@ import { SearchProvider } from '../../Contexts';
 
 const CardPage: React.FC = () => {
 	const [territoryInfo, setTerritoryInfo] = useState<TerritoryInfoInterface>({
-		area: undefined,
-		total_population: undefined,
-		urban_population: undefined,
+		area: 0,
+		total_population: 0,
+		urban_population: 0,
 		rank: undefined,
-		total_allocated: undefined,
+		total_allocated: 0,
 		name: undefined,
 		flag_url: undefined,
 		id: 0,
@@ -31,12 +31,10 @@ const CardPage: React.FC = () => {
 	const [brazilInfo, setBrazilInfo] = useState<BrazilInfoInterface>({
 		total_allocated: undefined,
 	});
+	const [defaultTerritory, setDefaultTerritory] = useState(0);
 	const [brazilInfoTotalAllocated, setBrazilInfoTotalAllocated] = useState(0);
 	const [notAllocatedPercentage, setNotAllocatedPercentage] = useState(0);
 	const [gas, setGas] = useState<GasInterface>({ id: 0, name: '', slug: '' });
-
-	// const [emissionsInfo, setEmissionsInfo] = useState({
-	// });
 
 	const { slug } = useParams<ParamsTypes>();
 	const { search } = useLocation();
@@ -59,14 +57,16 @@ const CardPage: React.FC = () => {
 				// brazil_emission,
 				brazil_emission_total_allocated,
 				gasUsed,
+				defaultTerritoryId,
 			} = response.data;
 
 			setTerritoryInfo(territory);
 			setBrazilInfoTotalAllocated(brazil_emission_total_allocated);
 			setNotAllocatedPercentage(non_allocated_emission_percentage);
 			setGas(gasUsed);
+			setDefaultTerritory(defaultTerritoryId);
 
-			console.log(territory);
+			console.log(response.data);
 		} catch (err) {
 			// console.tron.log(err);
 		}
@@ -89,6 +89,11 @@ const CardPage: React.FC = () => {
 				gasUsed: gas,
 				isCity: false,
 				territory: { id: territoryInfo.id, slug: territoryInfo.slug },
+				totalAllocated: territoryInfo.total_allocated,
+				allocatedEmissionInCountry: brazilInfoTotalAllocated,
+				defaultTerritory,
+				area: territoryInfo.area,
+				totalPopulation: territoryInfo.total_population,
 			}}
 		>
 			<Nav />
@@ -104,7 +109,7 @@ const CardPage: React.FC = () => {
 					allocatedEmissionInCountry={brazilInfoTotalAllocated}
 					notAllocatedPercentage={notAllocatedPercentage}
 				/>
-				<CardTabs total_allocated={territoryInfo.total_allocated || 0} />
+				<CardTabs />
 			</Container>
 			<Footer />
 		</SearchProvider>

@@ -13,13 +13,11 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { MapInfo, PositionState } from './interfaces';
 import { StyledPop as Popup } from './styles';
-import Header from '../Header';
 import api from '../../services/api';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
@@ -57,7 +55,7 @@ const Map: React.FC<MapInfo> = ({
 		year: 2020,
 	});
 	const [totalAllocatedEmission, setTotalAllocatedEmission] = useState('0,0');
-	const [zoom, setZoom] = useState(4);
+	const [zoom] = useState(4);
 	const [series, setSeries] = useState([
 		{
 			name: 'Energia',
@@ -179,7 +177,7 @@ const Map: React.FC<MapInfo> = ({
 			const response = await axios.get(
 				`${urlPath}?${params.map((e) => e.join('=')).join('&')}`
 			);
-			console.log(response.data.features[0].properties);
+			// console.log(response.data.features[0].properties);
 			setPopUpInfo(response.data.features[0].properties);
 			getPopUpChartInfo(response.data.features[0].properties.slug);
 		} catch (err) {

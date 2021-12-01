@@ -37,7 +37,7 @@ function TabPanel(props: TabPanelProps) {
 	);
 }
 
-const CardTabs: React.FC<CardTabsProps> = ({ total_allocated = 0 }) => {
+const CardTabs: React.FC = () => {
 	const [value, setValue] = useState(0);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -67,7 +67,7 @@ const CardTabs: React.FC<CardTabsProps> = ({ total_allocated = 0 }) => {
 					</AntTabs>
 				</Box>
 				<TabPanel value={value} index={0}>
-					<EmissionsProfile total_allocated={total_allocated} />
+					<EmissionsProfile />
 					<SectorCharts />
 					<StateAndCountryEmissions />
 					<TerritoryEconomicActivities />

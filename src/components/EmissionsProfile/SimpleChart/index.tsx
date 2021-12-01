@@ -6,16 +6,18 @@ import { formatEmissionNumber } from '../../../utils';
 import { SimpleChartProps } from './interfaces';
 
 const SimpleChart: React.FC<SimpleChartProps> = ({
-	total_allocated,
-	removals,
+	totalAllocated,
+	territoryRemovals,
 }) => {
 	const totalBruto = Math.abs(
 		Math.round(
-			Number(formatEmissionNumber(total_allocated).toString().split(',')[0])
+			Number(formatEmissionNumber(totalAllocated).toString().split(',')[0])
 		)
 	);
 	const totalRemovals = Math.abs(
-		Math.round(Number(formatEmissionNumber(removals).toString().split(',')[0]))
+		Math.round(
+			Number(formatEmissionNumber(territoryRemovals).toString().split(',')[0])
+		)
 	);
 
 	const [chartInfo] = useState({

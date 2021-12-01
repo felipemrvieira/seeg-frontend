@@ -26,3 +26,13 @@ export function formatNumber(number, separator, decimal_separator, decimals) {
 export function formatEmissionNumber(number) {
 	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+export function strToNumber(str) {
+	if (!str) {
+		return NaN;
+	}
+	if (typeof str === 'number') {
+		return str;
+	}
+	return Number(str.split('.').join('').split(',').join(''));
+}

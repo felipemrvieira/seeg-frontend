@@ -13,6 +13,11 @@ const SearchContext = React.createContext({
 		id: 0,
 		slug: '',
 	},
+	totalAllocated: 0,
+	allocatedEmissionInCountry: 0,
+	defaultTerritory: 0,
+	area: 0,
+	totalPopulation: 0,
 });
 export const SearchProvider = SearchContext.Provider;
 
