@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ContentLoader from 'react-content-loader';
-import axios from 'axios';
 import {
 	Container,
 	Box,
@@ -57,14 +56,7 @@ const MapLegend: React.FC<MapInfo> = ({
 				cities: false,
 			};
 
-			let API_URL;
-
-			if (process.env.NODE_ENV === 'production') {
-				API_URL = 'https://plataforma.seeg.eco.br';
-			} else {
-				API_URL = 'http://localhost:3000';
-			}
-			const response = await axios.get(`${API_URL}/map/emissions_info`, {
+			const response = await api.get(`/map/emissions_info`, {
 				params,
 			});
 			setMapLegend(response.data);

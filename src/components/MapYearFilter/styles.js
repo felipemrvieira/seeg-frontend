@@ -12,7 +12,7 @@ export const Container = styled.div`
 	width: 100%;
 	background: white;
 	padding: 6px 32px;
-	/* z-index: 9999; */
+	z-index: 999;
 	display: flex;
 	align-items: center;
 `;
