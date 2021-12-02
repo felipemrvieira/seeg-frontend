@@ -15,6 +15,7 @@ import {
 import CardHeader from '../../components/CardHeader';
 import CardTabs from '../../components/CardTabs';
 import { SearchProvider } from '../../Contexts';
+import Loader from '../../components/Loader';
 
 const CardPage: React.FC = () => {
 	const [territoryInfo, setTerritoryInfo] = useState<TerritoryInfoInterface>({
@@ -84,7 +85,7 @@ const CardPage: React.FC = () => {
 		getTerritoryInfo(slug, year);
 	}, []);
 
-	return (
+	return territoryInfo.id > 0 && gas.id > 0 ? (
 		<SearchProvider
 			value={{
 				slug,
@@ -117,6 +118,8 @@ const CardPage: React.FC = () => {
 			</Container>
 			<Footer />
 		</SearchProvider>
+	) : (
+		<Loader />
 	);
 };
 
